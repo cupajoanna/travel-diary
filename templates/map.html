@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<link rel="stylesheet" href="/static/css/maps.css"/>
+
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+
+
+
+{% endblock %}
+
+{% block body %}
+
+    <button id="geocode-address" style="z-index:2; position:absolute">
+    add a new city!
+    </button>
+
+    <div id="map"></div>
+    <script src="/static/js/mapsDemo.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx4bZy24pZfMho7vI4kWPIY7GdCFuU7bs&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+

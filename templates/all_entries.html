@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}All Entries{% endblock %}
+
+{% block body %}
+  <h1>All Entries</h1>
+
+  <ul>
+    {% for entry in entries %}
+      <li>
+        <a href="/entries/{{ entry.entry_id }}">
+          {{ entry.entry_id }}
+        </a>
+      </li>
+
+    {% endfor %}
+  </ul>
+{% endblock body %}

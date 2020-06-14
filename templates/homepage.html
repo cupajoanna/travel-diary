@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Movie Ratings Home{% endblock %}
+
+{% block body %}
+  <h1>Welcome!</h1>
+
+  <h2>Navigation</h2>
+  <ul>
+    <li><a href="/cities">View all cities</a></li>
+    <li><a href="/users">View all users</a></li>
+    <li><a href="/map">View map</a></li>
+    <li><a href="/entries">View entries</a></li>
+  </ul>
+
+<h2>Create an Account</h2>
+  <form action="/users" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+
+     <p>
+      Home City <input type="home_city" name="home_city">
+    </p>
+
+
+    <p>
+      Username <input type="username" name="username">
+    </p>
+
+
+
+    <p>
+      Password <input type="password" name="password">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+
+
+<h2>Login</h2>
+  <form action="/login" method="POST">
+    <p>
+      Email <input type="text" name="email">
+    </p>
+
+    <p>
+      Password <input type="password" name="password">
+    </p>
+
+  
+      <input type="submit">
+    </p>
+  </form>
+
+{% endblock %}
