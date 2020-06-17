@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Movie Ratings Home{% endblock %}
+{% block title %}Travel Diary{% endblock %}
 
 {% block body %}
   <h1>Welcome!</h1>
@@ -14,6 +14,7 @@
 
 <h2>Create an Account</h2>
   <form action="/users" method="POST">
+
     <p>
       Email <input type="text" name="email">
     </p>
@@ -34,7 +35,10 @@
     </p>
 
     <p>
-      <input type="submit">
+      
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up
+  </button>
+
     </p>
   </form>
 
@@ -50,8 +54,17 @@
     </p>
 
   
-      <input type="submit">
-    </p>
+     
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Log In
+  </button>
+
+
   </form>
+
+<h2>Logout</h2>
+  <button action="/logout" method="POST">
+    Log Out
+
+  </button>
 
 {% endblock %}

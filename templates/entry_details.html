@@ -3,10 +3,73 @@
 {% block title %}{{ entry.entry_id }} - Details{% endblock %}
 
 {% block body %}
-<h1>{{ entry.blog }}</h1>
+<h1>Entry for: {{ city.city_name }}</h1>
+<h1>Created at : {{ entry.created_at }}</h1>
 
 <p>
+
+
+ <main class="row mx-5 py-4">
+      <div class="col-8 mx-auto p-3 contact-form" >
+        <form action = "/entries/{{entry.entry_id}}" method="POST" enctype=multipart/form-data >
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="blog_date">Date of Travel</label>
+              <input id="blog_date" class="form-control" type="text">
+            </div>
+          </div>
+
+  {#         <div class="mb-3">
+            <label for="blog_city">City</label>
+            <input id="blog_city" class="form-control" type="text">
+          </div> #}
+
+          <div class="mb-3">
+            <label for="blog_entry" class="lead">Your blog here:</label>
+            <textarea id="blog_entry" class="form-control" rows="4">
+            </textarea>
+          </div>
+
+            <div class="mb-3">
+
+            <label for="image_upload" class="lead">Upload your photos</label>
+           
+                    <input id= 'image-upload' type=file name=image_upload>
+
+          </div>
+
+
+          <hr class="my-4">
+          <input type = "submit" class="mb-3 btn btn-primary btn-lg btn-block">
+        </form>
+
+      </div>
+    </main>
+
   {{ entry.blog }}
+
+
+{# {%if photos != []%} 
+
+  {%for photo in photos%}
+
+
+  <img src="{{photo.photo_url}}">
+
+  {%endfor%}
+
+
+{%endif%}
+ #}
+
 </p>
+<!-- Scripts -->
+
+{# <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/static/js/cloudinary.js"></script> #}
 
 {% endblock %}

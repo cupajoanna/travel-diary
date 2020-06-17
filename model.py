@@ -78,6 +78,11 @@ class Entry(db.Model):
     def __repr__(self):
         return f'<Entry entry_id={self.entry_id} city_id={self.city_id} user_id={self.user_id} created_at={self.created_at}>'
 
+    # def update_blog(self, new_entry):
+    #     self.blog = self.blog.append(new_entry) 
+    
+    #     return f'<Entry blog={self.blog}>'
+
 
 class City(db.Model):
     """A city."""

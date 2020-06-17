@@ -1,12 +1,13 @@
 from model import db, User, Entry, Rating, City, Photo, connect_to_db
 
+"""User functions"""
 
 def create_user(email, password, username, city):
-    """Create and return a new user."""
 
     user = User(email=email, password=password, username=username, city=city)
 
     db.session.add(user)
+    db.session.commit()
 
 
     return user
@@ -22,12 +23,14 @@ def get_user_by_email(email):
 
     return User.query.filter(User.email == email).first()
 
+"""City functions"""
+
 def get_user_cities(user_id):
     return db.session.query(City).join(Entry.city).filter(Entry.user_id == user_id).all()
 
 
+
 def create_city(city_name, country_name, geo_lat, geo_lng):
-    """Create and return a new movie."""
 
     city = City( 
                 city_name= city_name, 
@@ -38,12 +41,12 @@ def create_city(city_name, country_name, geo_lat, geo_lng):
     print(city)
 
     db.session.add(city)
+    db.session.commit()
 
 
     return city
 
 def get_cities():
-    """Return all movies."""
 
     return City.query.all()
 
@@ -51,11 +54,16 @@ def get_city_by_id(city_id):
     return City.query.get(city_id)
 
 def get_city_by_name(city_name):
-    return City.query.filter(city_name == city_name).first()
+
+    print("*" * 100)
+    print(city_name)
+    return City.query.filter(City.city_name == city_name).first()
+
+"""Entry Functions"""
 
 
 def create_entry(user, blog, city):
-    """Create and return a new movie."""
+
 
     entry = Entry( 
                 user= user, 
@@ -63,7 +71,7 @@ def create_entry(user, blog, city):
                 city=city)
 
     db.session.add(entry)
-
+    db.session.commit()
 
     return entry
 
@@ -76,24 +84,55 @@ def get_entry_by_id(entry_id):
     return Entry.query.get(entry_id)
 
 
+def get_entry_by_city(city_id):
+    return Entry.query.get(city_id)
+
+
+def update_entry(new_entry, entry_id):
+
+    update_this = Entry.query.filter(Entry.entry_id == entry_id).first()
+
+    update_this.blog = new_entry
+
+    db.session.commit()
+
+    return update_this.blog
+
+def get_city_by_entry(entry_id):
+    return db.session.query(City).join(Entry.city).filter(Entry.entry_id == entry_id).first()
+
+def get_user_by_entry(entry_id):
+    return db.session.query(User).join(Entry.user).filter(Entry.entry_id == entry_id).first()
+
+
+    
+
+"""Rating Functions"""
+
+
 def create_rating(liker, entry):
-    """Create and return a new rating."""
 
     rating = Rating(liker=liker, entry=entry)
 
     db.session.add(rating)
+    db.session.commit()
 
 
     return rating
 
+"""Photo Functions"""
+
 
 def create_photo(user, entry, photo_url, city):
-    """Create and return a new rating."""
-
+ 
     photo = Photo(user=user, entry=entry, photo_url=photo_url, city=city)
+
+    print("^"*100)
+    print(photo)
 
     db.session.add(photo)
     db.session.commit()
+
 
 
     return photo
