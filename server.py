@@ -1,4 +1,4 @@
-"""Server for movie ratings app."""
+"""Server for travel diary app."""
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
@@ -182,7 +182,12 @@ def view_only_entry(entry_id):
         # print("&"*100)
         # print(entry.title)
 
-        return render_template('see_entry_only.html', entry=entry, city=city, photo = photo, total_ratings = total_ratings)
+        created_at_raw = entry.created_at
+
+        created_at = str(created_at_raw)[0:10]
+
+
+        return render_template('see_entry_only.html', entry=entry, city=city, photo = photo, total_ratings = total_ratings, created_at= created_at)
 
 
 @app.route('/your_entries')
@@ -254,6 +259,7 @@ def register_entry(city_name):
     entry = crud.create_entry(user, blog, city, title)
     flash('Entry created!')
 
+
     # if city:
     #     entry = crud.create_entry(user, blog, city)
     #     flash('Entry created!')
@@ -267,30 +273,33 @@ def register_entry(city_name):
 @app.route('/route-to-entry/<city_id>')
 def route_to_entry(city_id):
 
-    if session.get('current_user'):
 
-        city = crud.get_city_by_id(city_id)
-        entry = crud.get_entry_by_city(city_id)
-        entry_id = entry.entry_id
+    city = crud.get_city_by_id(city_id)
+    entry = crud.get_entry_by_city(city_id)
+    entry_id = entry.entry_id
 
-        print("*" * 50)
-        print(entry)
-        print(city_id)
-        print(city)
+    print("*" * 50)
+    print(entry)
+    print(city_id)
+    print(city)
 
-        photo = crud.get_photo_by_entry(entry_id)
+    photo = crud.get_photo_by_entry(entry_id)
 
-        ratings = crud.get_entry_ratings(entry_id)
+    ratings = crud.get_entry_ratings(entry_id)
 
-        total_ratings = 0
+    total_ratings = 0
 
-        for rating in ratings: 
-            total_ratings += 1
+    for rating in ratings: 
+        total_ratings += 1
+
+    created_at_raw = entry.created_at
+
+    created_at = str(created_at_raw)[0:10]
 
 
-    return redirect('/entries/{}'.format(entry.entry_id))
+    return redirect('/entries/{}'.format(entry_id))
 
-    # return render_template('entry_details.html', entry=entry, city=city, photo = photo)
+    # return render_template('entry_details.html', entry=entry, city=city, photo = photo, total_ratings = total_ratings)
 
 
 
@@ -325,6 +334,11 @@ def update_blog(entry_id):
     crud.update_entry(new_entry, new_title, entry_id)
     flash('blog updated')
     entry = crud.get_entry_by_id(entry_id)
+
+    created_at_raw = entry.created_at
+
+    created_at = str(created_at_raw)[0:10]
+
 
     if image_uploaded:
         photo = crud.create_photo(user, entry, returned_url, city)

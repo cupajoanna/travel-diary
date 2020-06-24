@@ -20,6 +20,7 @@
 
           window.location.href = `/route-to-entry/${cityId}`
           console.log(cityId)
+          console.log(content)
           alert("Going to your blog entry!")
         };
 

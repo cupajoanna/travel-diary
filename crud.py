@@ -89,7 +89,8 @@ def get_entry_by_id(entry_id):
 
 
 def get_entry_by_city(city_id):
-    return Entry.query.get(city_id)
+
+    return Entry.query.filter(Entry.city_id == city_id).first()
 
 
 def update_entry(new_entry, new_title, entry_id):
