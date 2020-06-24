@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}All Entries{% endblock %}
+{% block title %}Your Entries{% endblock %}
 
 {% block body %}
 
@@ -16,14 +16,19 @@
     <li><a href="/map">Add to your map</a></li>
     <li><a href="/your_entries">Edit Your Entries</a></li>
   </ul>
-  
 
-  <h1>All Users' Entries</h1>
+  <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+
+
+  <h1>All of your Entries</h1>
 
   <ul>
     {% for entry in entries %}
       <li>
-        <a href="/entries/view_only/{{ entry.entry_id }}">
+        <a href="/entries/{{ entry.entry_id }}">
           
           {{entry.title}}
         </a>
@@ -34,4 +39,9 @@
 
     {% endfor %}
   </ul>
-{% endblock body %}
+
+{# 
+
+<script src="/static/js/yourentries.js"></script> #}
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ entry.entry_id }} 
+
+Blog Entry 
+
+{% endblock %}
+
+{% block body %}
+
+
+
+<h2>Navigation</h2>
+  <ul>
+    <h3>Global Feed</h3>
+    <li><a href="/">Homepage</a></li>
+    <li><a href="/users">View all users</a></li>
+    <li><a href="/entries">View all entries feed</a></li>
+
+    <h3>Personal Suitcase</h3>
+
+    <li><a href="/map">Add to your map</a></li>
+    <li><a href="/your_entries">Edit Your Entries</a></li>
+  </ul>
+
+
+<h1>Entry for: {{ city.city_name }}</h1>
+<h1>Created at : {{ entry.created_at }}</h1>
+
+<p>
+
+  <h2>{{entry.title}}</h2>
+
+     <p>
+        Number of likes <span id="likes-counter"> {{total_ratings}} </span>
+        likes
+      </p>
+
+    <button id="add-to-likes-button" class= "add-to-likes-button" value= "{{entry.entry_id}}">
+    like this entry
+    </button>
+
+ <p>
+  {{ entry.blog }}
+
+  </p>
+
+{%if photo%} 
+  {%for p in photo%}
+
+<div>
+
+       <img src="{{p.photo_url}}">
+
+</div>
+
+  {%endfor%}
+
+
+{%endif%}
+
+
+</p>
+<!-- Scripts -->
+
+<script src="/static/js/torate.js"></script>
+
+{% endblock %}

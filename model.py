@@ -5,9 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-# Replace this with your code!
-
-
 def connect_to_db(flask_app, db_uri='postgresql:///travel-diary', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
@@ -65,7 +62,7 @@ class Entry(db.Model):
     entry_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     city_id = db.Column(db.Integer, db.ForeignKey('cities.city_id'))
-    # title_name = db.Column(db.Text)
+    title = db.Column(db.Text)
     blog = db.Column(db.Text)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())

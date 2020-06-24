@@ -4,13 +4,20 @@
 {% block body %}
   <h1>Welcome!</h1>
 
-  <h2>Navigation</h2>
+<h2>Navigation</h2>
   <ul>
-    <li><a href="/cities">View all cities</a></li>
+    <h3>Global Feed</h3>
+    <li><a href="/">Homepage</a></li>
     <li><a href="/users">View all users</a></li>
-    <li><a href="/map">View map</a></li>
-    <li><a href="/entries">View entries</a></li>
+    <li><a href="/entries">View all entries feed</a></li>
+    <li><a href="/cities">View all cities</a></li>
+
+    <h3>Personal Suitcase</h3>
+
+    <li><a href="/map">Add to your map</a></li>
+    <li><a href="/your_entries">Edit Your Entries</a></li>
   </ul>
+
 
 <h2>Create an Account</h2>
   <form action="/users" method="POST">
@@ -62,9 +69,10 @@
   </form>
 
 <h2>Logout</h2>
-  <button action="/logout" method="POST">
-    Log Out
+  <form action="/logout" method="POST">
+    <button>
+    Log Out </button>
 
-  </button>
+  </form>
 
 {% endblock %}

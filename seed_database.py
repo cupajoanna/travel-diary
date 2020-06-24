@@ -9,12 +9,10 @@ import server
 
 
 
-def create_db():
-    os.system('dropdb travel-diary')
-    os.system('createdb travel-diary')
-    model.db.create_all()
-
-
+# def create_db():
+#     os.system('dropdb travel-diary')
+#     os.system('createdb travel-diary')
+#     model.db.create_all()
 
 
 # Create cities, store them in list so we can use them
@@ -36,12 +34,8 @@ def city():
 
         cities_in_db.append(db_city)
 
-    db.session.commit()
-    # TODO: get the title, overview, and poster_path from the movie
-    # dictionary. Then, get the release_date and convert it to a
-    # datetime object with datetime.strptime
+    model.db.session.commit()
 
-    # TODO: create a movie here and append it to movies_in_db
 
 def user():
 
@@ -60,7 +54,7 @@ def user():
         user = crud.create_user(email, password, username, home_city)
         users_in_db.append(user)
 
-    db.session.commit()
+    model.db.session.commit()
 
 
 
@@ -71,11 +65,12 @@ def entry():
 
     for n in range(100):
         user = choice(all_users)
-        blog = "hello world"
+        blog = "entry to be updated"
+        title = "title to be updated"
         city = choice(all_cities)
 
-        entry = crud.create_entry(user, blog, city)
-    db.session.commit()
+        entry = crud.create_entry(user, blog, city, title)
+    model.db.session.commit()
 
 def rating():
 
@@ -88,22 +83,23 @@ def rating():
         entry = choice(all_entries)
 
         crud.create_rating(liker, entry)
-    db.session.commit()
+    model.db.session.commit()
 
-def photo():
+# def photo():
 
-    all_users = crud.get_users()
-    all_entries = crud.get_entries()
-    all_cities = crud.get_cities()
+#     all_users = crud.get_users()
+#     all_entries = crud.get_entries()
+#     all_cities = crud.get_cities()
 
-    for n in range(100):
+#     for n in range(100):
 
-        user = choice(all_users)
-        entry = choice(all_entries)
-        photo_url = "www.somepath.com"
-        city = choice(all_cities)
+#         user = choice(all_users)
+#         entry = choice(all_entries)
+#         photo_url = "www.somepath.com"
+#         city = choice(all_cities)
 
-        photo = crud.create_photo(user, entry, photo_url, city)
+#         photo = crud.create_photo(user, entry, photo_url, city)
+#     model.db.session.commit()
     
 
 
@@ -112,18 +108,11 @@ def photo():
 # create_db()
 model.connect_to_db(server.app)
 
-# city()
-# user()
-# entry()
-# rating()
-photo()
+city()
+user()
+entry()
+rating()
+# photo()
 
-
-    # __tablename__ = 'ratings'
-    # rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # liker_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    # # receiver_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    # entry_id = db.Column(db.Integer, db.ForeignKey('entries.entry_id'))
-    # created_on = db.Column(db.DateTime, server_default=db.func.now())
 
 

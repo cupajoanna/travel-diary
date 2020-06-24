@@ -2,12 +2,29 @@
 {% block title %}All Cities{% endblock %}
 
 {% block body %}
+
+
+<h2>Navigation</h2>
+  <ul>
+    <h3>Global Feed</h3>
+    <li><a href="/">Homepage</a></li>
+    <li><a href="/users">View all users</a></li>
+    <li><a href="/entries">View all entries feed</a></li>
+
+    <h3>Personal Suitcase</h3>
+
+    <li><a href="/map">Add to your map</a></li>
+    <li><a href="/your_entries">Edit Your Entries</a></li>
+  </ul>
+
+
   <h1>All Cities</h1>
 
   <ul>
     {% for city in cities %}
       <li>
         <a href="/cities/{{ city.city_id }}">
+          {{ city.city_id}}
           {{ city.city_name }}
           {{ city.geo_lat }}
           {{ city.geo_lng }}

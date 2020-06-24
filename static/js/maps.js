@@ -13,16 +13,16 @@
           window.location.href = `/create-entry/${locationName}`
           console.log(locationName)
           alert("Creating Entry!")
-        }
+        };
+
+        function seeEntry(cityId){
 
 
-        function seeEntry(content){
-
-
-          window.location.href = `/create-entry/${props.content}`
-          console.log(props.content)
+          window.location.href = `/route-to-entry/${cityId}`
+          console.log(cityId)
           alert("Going to your blog entry!")
-        }
+        };
+
 
 
 var map;
@@ -44,7 +44,8 @@ var map;
   for (var i = 0; i < res.length;i++){
     addMarker({
               coords: {lat: res[i].user_lat, lng: res[i].user_lng},
-              content: '<h1>'+ res[i].city_name + '</h1>'
+              content: '<h1>'+ res[i].city_name + '</h1>',
+              cityId: res[i].city_id 
             });
         }});
 
@@ -86,6 +87,7 @@ infoWindow.open(map, userLocationMarker);
 });
 
 
+
         // Zoom in on the geolocated location
 map.setCenter(userLocation);
 map.setZoom(3);
@@ -120,10 +122,12 @@ function addMarker(props){
 
         var infoWindow = new google.maps.InfoWindow({
         content: `<h1> ${props.content} </h1>` +  
-    `<button id="routeToEntry" onclick="seeEntry(${props.content})">see your entry</button>`
+    `<button id="routeToEntry" onclick="seeEntry(${props.cityId})">see your entry</button>`
 
 
       });
+
+
 
       marker.addListener('click', function(){
         infoWindow.open(map, marker);

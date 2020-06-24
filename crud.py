@@ -28,6 +28,9 @@ def get_user_by_email(email):
 def get_user_cities(user_id):
     return db.session.query(City).join(Entry.city).filter(Entry.user_id == user_id).all()
 
+def get_user_entries(user_id):
+    return db.session.query(Entry).join(Entry.city).filter(Entry.user_id == user_id).all()
+
 
 
 def create_city(city_name, country_name, geo_lat, geo_lng):
@@ -62,13 +65,14 @@ def get_city_by_name(city_name):
 """Entry Functions"""
 
 
-def create_entry(user, blog, city):
+def create_entry(user, blog, city, title):
 
 
     entry = Entry( 
                 user= user, 
                 blog = blog, 
-                city=city)
+                city=city,
+                title=title)
 
     db.session.add(entry)
     db.session.commit()
@@ -88,15 +92,18 @@ def get_entry_by_city(city_id):
     return Entry.query.get(city_id)
 
 
-def update_entry(new_entry, entry_id):
+def update_entry(new_entry, new_title, entry_id):
 
-    update_this = Entry.query.filter(Entry.entry_id == entry_id).first()
+    update_this = Entry.query.get(entry_id)
+    print(update_this)
 
     update_this.blog = new_entry
+    update_this.title = new_title
 
     db.session.commit()
 
-    return update_this.blog
+    return update_this
+    
 
 def get_city_by_entry(entry_id):
     return db.session.query(City).join(Entry.city).filter(Entry.entry_id == entry_id).first()
@@ -120,22 +127,37 @@ def create_rating(liker, entry):
 
     return rating
 
+def get_rating_by_rating_id(rating_id):
+
+    return Rating.query.filter(Rating.rating_id == rating_id).first()
+
+
+def get_entry_ratings(entry_id):
+    return Rating.query.filter(Rating.entry_id == entry_id).all()
+
+
 """Photo Functions"""
+
 
 
 def create_photo(user, entry, photo_url, city):
  
     photo = Photo(user=user, entry=entry, photo_url=photo_url, city=city)
 
-    print("^"*100)
-    print(photo)
-
     db.session.add(photo)
     db.session.commit()
-
-
-
     return photo
+
+
+def delete_photo(photo_id):
+
+   Photo.query.filter(Photo.photo_id == photo_id).delete()
+
+   db.session.commit()
+
+
+def get_photo_by_entry(entry_id):
+    return db.session.query(Photo).filter(Photo.entry_id == entry_id).all()
 
 
 

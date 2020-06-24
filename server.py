@@ -15,9 +15,6 @@ from flask_debugtoolbar import DebugToolbarExtension
 import cloudinary 
 import cloudinary.uploader
 
-# # print(dir(Cloud))
-# print(dir(cloudinary.uploader))
-# print("*"*100)
 
 app = Flask(__name__)
 
@@ -78,13 +75,13 @@ def login():
         flash('error')
 
     return redirect('/')
-    print(user)
 
 @app.route('/logout', methods=['POST'])
 def logout():
 
     # session['current_user'] = None
     session.clear()
+    flash('logged out!')
 
     return redirect('/')
 
@@ -96,6 +93,7 @@ def logout():
 def all_cities():
     """View all movies."""
 
+    # user_id = session['current_user']
     cities = crud.get_cities()
 
     return render_template('all_cities.html', cities=cities)
@@ -103,25 +101,21 @@ def all_cities():
 @app.route("/map")
 def view_map():
 
-    print("*" * 100)
-
     user_id = session['current_user']
     user_cities = crud.get_user_cities(user_id)
-    # user_lat = user_cities[0].geo_lat
-    # user_lng = user_cities[0].geo_lng
+
 
 
     return render_template('map.html', 
                             user_cities=user_cities,
                             user_id=user_id
-                            # ,user_lat=user_lat,
-                            # user_lng=user_lng
+
                          )
 
 @app.route("/map-json")
+
 def map_json():
 
-    print("*" * 100)
 
     user_id = session['current_user']
     user_cities = crud.get_user_cities(user_id)
@@ -135,14 +129,6 @@ def map_json():
                  'city_name': city.city_name,
                  'user_lat': city.geo_lat,
                  'user_lng': city.geo_lng})
-
-
-    # city_dict = { 'user_id':  session['current_user'],
-    #              'city_id': user_cities[0].city_id,
-    #              'city_name': user_cities[0].city_name,
-    #              'user_lat': user_cities[0].geo_lat,
-    #              'user_lng': user_cities[0].geo_lng
-    #                     }
 
     return jsonify(city_list)
 
@@ -167,8 +153,6 @@ def show_user(user_id):
 
 """Entries"""
 
-
-
 @app.route('/entries')
 def all_entries():
 
@@ -176,15 +160,82 @@ def all_entries():
 
     return render_template('all_entries.html', entries=entries)
 
+@app.route('/entries/view_only/<entry_id>')
+def view_only_entry(entry_id):
+
+    if session.get('current_user'):
+
+        entry = crud.get_entry_by_id(entry_id)
+        city_id = entry.city_id
+
+        city = crud.get_city_by_id(city_id)
+
+        ratings = crud.get_entry_ratings(entry_id)
+
+        total_ratings = 0
+
+        for rating in ratings: 
+            total_ratings += 1
+
+
+        photo = crud.get_photo_by_entry(entry_id)
+        # print("&"*100)
+        # print(entry.title)
+
+        return render_template('see_entry_only.html', entry=entry, city=city, photo = photo, total_ratings = total_ratings)
+
+
+@app.route('/your_entries')
+def your_entries():
+
+    user_id = session['current_user']
+    entries = crud.get_user_entries(user_id)
+
+    return render_template('your_entries.html', entries=entries)
+
+
+
+    # if session.get('current_user'):
+
+    #     entries = crud.get_entries()
+
+    # return redirect('/')
+
 @app.route('/entries/<entry_id>')
 def show_entry(entry_id):
 
-    entry = crud.get_entry_by_id(entry_id)
-    city_id = entry.city_id
+    if session.get('current_user'):
 
-    city = crud.get_city_by_id(city_id)
+        entry = crud.get_entry_by_id(entry_id)
+        city_id = entry.city_id
 
-    return render_template('entry_details.html', entry=entry, city=city)
+        city = crud.get_city_by_id(city_id)
+
+        print("*" * 50)
+        print(entry)
+        print(city)
+
+        photo = crud.get_photo_by_entry(entry_id)
+
+        ratings = crud.get_entry_ratings(entry_id)
+
+        created_at_raw = entry.created_at
+
+        created_at = str(created_at_raw)[0:10]
+
+        total_ratings = 0
+
+        for rating in ratings: 
+            total_ratings += 1
+
+
+        # print("&"*100)
+        # print(entry.title)
+
+        return render_template('entry_details.html', entry=entry, city=city, photo = photo, total_ratings = total_ratings, created_at = created_at)
+    # return redirect('/')
+
+
 
 
 @app.route('/create-entry/<city_name>')
@@ -193,13 +244,14 @@ def register_entry(city_name):
     user_id = session['current_user']
     user = crud.get_user_by_id(user_id)
 
+    title = "title to be added"
+
     blog = "to be added"
     # city_name= request.args.get('city_name')
     city= crud.get_city_by_name(city_name)
-    print("*" * 50)
-    print(city_name)
 
-    entry = crud.create_entry(user, blog, city)
+
+    entry = crud.create_entry(user, blog, city, title)
     flash('Entry created!')
 
     # if city:
@@ -212,44 +264,134 @@ def register_entry(city_name):
     return redirect('/entries/{}'.format(entry.entry_id))
 
 
+@app.route('/route-to-entry/<city_id>')
+def route_to_entry(city_id):
 
-app.route('/entries/<entry_id>', methods=['POST'])
+    if session.get('current_user'):
+
+        city = crud.get_city_by_id(city_id)
+        entry = crud.get_entry_by_city(city_id)
+        entry_id = entry.entry_id
+
+        print("*" * 50)
+        print(entry)
+        print(city_id)
+        print(city)
+
+        photo = crud.get_photo_by_entry(entry_id)
+
+        ratings = crud.get_entry_ratings(entry_id)
+
+        total_ratings = 0
+
+        for rating in ratings: 
+            total_ratings += 1
+
+
+    return redirect('/entries/{}'.format(entry.entry_id))
+
+    # return render_template('entry_details.html', entry=entry, city=city, photo = photo)
+
+
+
+
+@app.route('/entries/<entry_id>/update', methods=['POST'])
 def update_blog(entry_id):
 
 
-    entry = crud.get_entry_by_id(entry_id)
+    
+    new_title = request.form.get('blog_title')
+
     new_entry = request.form.get('blog_entry')
 
+    image_uploaded = request.files.get('image_upload')
 
-    image_uploaded = request.files['image_upload']
-
-
-    response = cloudinary.uploader.upload(image_uploaded)
-    returned_url = response['url']
+    if image_uploaded:
+        response = cloudinary.uploader.upload(image_uploaded)
+        returned_url = response['url']
 
 
     city = crud.get_city_by_entry(entry_id)
     user = crud.get_user_by_entry(entry_id)
 
+    ratings = crud.get_entry_ratings(entry_id)
+
+    total_ratings = 0
+
+    for rating in ratings: 
+        total_ratings += 1
 
 
-    photo = crud.create_photo(user, entry, returned_url, city)
-    print("^"*100)
-    print(photo)
-    flash('photo created')
-
-
-    crud.update_entry(new_entry, entry_id)
+    crud.update_entry(new_entry, new_title, entry_id)
     flash('blog updated')
+    entry = crud.get_entry_by_id(entry_id)
 
-    photos = []
-
-
-    return render_template('entry_details.html', entry=entry, city=city, photos=photos)
-
-    # return redirect('/entries/{}'.format(entry_id))
+    if image_uploaded:
+        photo = crud.create_photo(user, entry, returned_url, city)
+        flash('photo created')
 
 
+    return redirect('/entries/{}'.format(entry_id))
+
+
+@app.route('/delete-photo', methods=['POST'])
+
+def delete_photo():
+
+    
+    selected_photo_id= request.form.get("photo_id")
+
+    crud.delete_photo(selected_photo_id)
+
+
+    return "photo deleted"
+
+
+@app.route('/entries/<entry_id>/like-entry', methods=['POST'])
+
+def like_entry(entry_id):
+
+    user_id = session['current_user']
+    user = crud.get_user_by_id(user_id)
+
+    # selected_rating_id = request.form.get("rating_id")
+
+    # rating = crud.get_rating_by_rating_id(selected_rating_id)
+
+    entry = crud.get_entry_by_id(entry_id)
+
+
+    # selected_rating_id= request.form.get("rating_id")
+
+    # num_likes= request.form.get("likes-counter")
+
+    rating = crud.create_rating(user, entry)
+    print(rating)
+    print("@" * 100)
+
+    ratings = crud.get_entry_ratings(entry_id)
+
+    total_ratings = 0
+
+    for rating in ratings: 
+        total_ratings += 1
+
+
+    return str(total_ratings)
+
+
+    # entry_list = []
+
+    # for entry in user_entries:
+    #     entry_list.append({'user_id':  session['current_user'],
+    #              'city_id': entry.city_id,
+    #              'title': entry.title,
+    #              'blog': entry.blog})
+
+    # return jsonify(entry_list)
+
+
+    # entries = crud.get_entries()
 
 
 if __name__ == '__main__':

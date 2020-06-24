@@ -1,37 +1,66 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ entry.entry_id }} - Details{% endblock %}
+{% block title %}{{ entry.entry_id }} 
+
+Blog Entry 
+
+{% endblock %}
 
 {% block body %}
+
+
+
+<h2>Navigation</h2>
+  <ul>
+    <h3>Global Feed</h3>
+    <li><a href="/">Homepage</a></li>
+    <li><a href="/users">View all users</a></li>
+    <li><a href="/entries">View all entries feed</a></li>
+
+    <h3>Personal Suitcase</h3>
+
+    <li><a href="/map">Add to your map</a></li>
+    <li><a href="/your_entries">Edit Your Entries</a></li>
+  </ul>
+
+
+
 <h1>Entry for: {{ city.city_name }}</h1>
-<h1>Created at : {{ entry.created_at }}</h1>
+<h1>Created at : {{created_at }}</h1>
 
 <p>
 
 
  <main class="row mx-5 py-4">
       <div class="col-8 mx-auto p-3 contact-form" >
-        <form action = "/entries/{{entry.entry_id}}" method="POST" enctype=multipart/form-data >
+        <form action = "/entries/{{entry.entry_id}}/update" method="POST" enctype=multipart/form-data id="form" >
 
-          <div class="row">
-            <div class="col-md-6 mb-3">
-            </div>
 
-            <div class="col-md-6 mb-3">
-              <label for="blog_date">Date of Travel</label>
-              <input id="blog_date" class="form-control" type="text">
             </div>
           </div>
 
-  {#         <div class="mb-3">
-            <label for="blog_city">City</label>
-            <input id="blog_city" class="form-control" type="text">
-          </div> #}
+          <div class="mb-3">
+            <label for="blog_entry" class="lead">Your blog title</label>
+            <textarea id="blog_title" name = "blog_title" class="blog_title">
+
+              {%if entry.title%}
+              {{entry.title}}
+
+              {%endif%}
+            </textarea>
+          </div>
+
 
           <div class="mb-3">
             <label for="blog_entry" class="lead">Your blog here:</label>
-            <textarea id="blog_entry" class="form-control" rows="4">
+            <textarea id="blog_entry" name="blog_entry" class="form-control" rows="4">
+
+              {%if entry.blog%}
+              {{entry.blog}}
+
+              {%endif%}
             </textarea>
+
           </div>
 
             <div class="mb-3">
@@ -44,32 +73,36 @@
 
 
           <hr class="my-4">
-          <input type = "submit" class="mb-3 btn btn-primary btn-lg btn-block">
+          <input type = "submit" id = "file_submit" class="mb-3 btn btn-primary btn-lg btn-block">
         </form>
 
       </div>
     </main>
 
+  <h2>{{entry.title}}</h2>
+
   {{ entry.blog }}
 
 
-{# {%if photos != []%} 
+{%if photo%} 
+  {%for p in photo%}
 
-  {%for photo in photos%}
+<div>
 
+       <img src="{{p.photo_url}}">
+       <button id="{{p.photo_id}}" class ="photo_delete"> delete </button>  
 
-  <img src="{{photo.photo_url}}">
+</div>
 
   {%endfor%}
 
 
 {%endif%}
- #}
+
 
 </p>
 <!-- Scripts -->
 
-{# <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/static/js/cloudinary.js"></script> #}
+<script src="/static/js/photoupload.js"></script>
 
 {% endblock %}
