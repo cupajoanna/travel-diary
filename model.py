@@ -70,6 +70,7 @@ class Entry(db.Model):
 
     user = db.relationship('User', backref='entries')
     city = db.relationship('City', backref='entries')
+    
     # photos = db.relationship('Photo')
 
     def __repr__(self):

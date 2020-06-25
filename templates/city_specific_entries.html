@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Your Entries{% endblock %}
+{% block title %}All Entries{% endblock %}
 
 {% block body %}
 
@@ -16,39 +16,24 @@
     <li><a href="/map">Add to your map</a></li>
     <li><a href="/your_entries">Edit Your Entries</a></li>
   </ul>
+  
 
-  <script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
+  <h1>{{city.city_name}} Entries</h1>
 
-
-  <h1>All of your Entries</h1>
-
-  <ul>
+  <p>
+    <ul>
     {% for entry in entries %}
       <li>
-        <a href="/entries/{{ entry.entry_id }}">
+        <a href="/entries/view_only/{{ entry.entry_id }}">
           
           {{entry.title}}
         </a>
-          {{entry.blog[:100]}}
+          {{entry.blog}}
           {{entry.created_at}}
 
-          {%for p in entry.photos%}
-
-               <img src="{{p.photo_url}}">
-
-           {% endfor %}
-
-
       </li>
+      </p>
 
     {% endfor %}
   </ul>
-
-
-
-<script src="/static/js/yourentries.js"></script>
-
-{% endblock %} 
+{% endblock body %}

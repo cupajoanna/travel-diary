@@ -55,7 +55,10 @@ def register_user():
         flash('Cannot create an account with that email. Try again.')
     else:
         crud.create_user(email, password, username, city)
-        flash('Account created! Please log in.')
+        user = crud.get_user_by_email(email)
+        session['current_user'] = user.user_id
+        flash('Account created! You are logged in!')
+
 
     return redirect('/')
 
@@ -133,6 +136,22 @@ def map_json():
     return jsonify(city_list)
 
 
+@app.route("/cities-json")
+
+def cities_json():
+
+
+    all_cities = crud.get_cities()
+
+    cities = []
+
+    for city in all_cities:
+        cities.append(city.city_name)
+
+    return jsonify(cities)
+
+
+
 """Users"""
 
 
@@ -159,6 +178,17 @@ def all_entries():
     entries = crud.get_entries()
 
     return render_template('all_entries.html', entries=entries)
+
+
+@app.route('/entries/city_specific/<city_id>')
+def city_specific_entries(city_id):
+
+    entries = crud.get_all_entries_by_city(city_id)
+    city = crud.get_city_by_id(city_id)
+
+    return render_template('city_specific_entries.html', entries=entries, city=city)
+
+
 
 @app.route('/entries/view_only/<entry_id>')
 def view_only_entry(entry_id):
