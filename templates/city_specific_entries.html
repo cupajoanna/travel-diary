@@ -22,17 +22,28 @@
 
   <p>
     <ul>
-    {% for entry in entries %}
-      <li>
-        <a href="/entries/view_only/{{ entry.entry_id }}">
-          
-          {{entry.title}}
-        </a>
-          {{entry.blog}}
-          {{entry.created_at}}
+    {% for entry, count in entries_with_ratings %}
 
-      </li>
-      </p>
+           <li>
+            <b>
+              Number of Likes: {{count}}
+            </b>
+
+            <a href="/entries/view_only/{{ entry.entry_id }}">
+              
+              {{entry.title}}
+            </a>
+              {{entry.blog[:100]}}
+              {{entry.created_at}}
+
+               {%for p in entry.photos%}
+
+               <img src="{{p.photo_url}}">
+
+           {% endfor %}
+
+          </li>
+          </p>
 
     {% endfor %}
   </ul>

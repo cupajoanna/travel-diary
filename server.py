@@ -29,6 +29,11 @@ cloudinary.config.update = ({
     'api_secret': os.environ.get('CLOUDINARY_API_SECRET')
 })
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def show_app(path):
+    return render_template('index.html')
+
 
 @app.route('/')
 def homepage():
@@ -175,7 +180,7 @@ def show_user(user_id):
 @app.route('/entries')
 def all_entries():
 
-    entries = crud.get_entries()
+    entries = crud.get_all_entries_ordered_by_ratings_count()[::-1]
 
     return render_template('all_entries.html', entries=entries)
 
@@ -183,10 +188,10 @@ def all_entries():
 @app.route('/entries/city_specific/<city_id>')
 def city_specific_entries(city_id):
 
-    entries = crud.get_all_entries_by_city(city_id)
+    entries_with_ratings = crud.get_city_entries_ordered_by_ratings_count(city_id)[::-1]
     city = crud.get_city_by_id(city_id)
 
-    return render_template('city_specific_entries.html', entries=entries, city=city)
+    return render_template('city_specific_entries.html', entries_with_ratings=entries_with_ratings, city=city)
 
 
 

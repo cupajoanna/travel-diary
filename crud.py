@@ -31,6 +31,12 @@ def get_user_cities(user_id):
 def get_user_entries(user_id):
     return db.session.query(Entry).join(Entry.city).filter(Entry.user_id == user_id).all()
 
+def get_city_entries_ordered_by_ratings_count(city_id):
+    return db.session.query(Entry, db.func.count(
+        Rating.rating_id)).outerjoin(
+            Rating).filter(Entry.city_id == city_id).group_by(
+                    Entry.entry_id).order_by(db.func.count(
+                            Rating.rating_id)).all()
 
 
 def create_city(city_name, country_name, geo_lat, geo_lng):
@@ -82,6 +88,13 @@ def create_entry(user, blog, city, title):
 def get_entries():
 
     return Entry.query.all()
+
+def get_all_entries_ordered_by_ratings_count():
+    return db.session.query(Entry, db.func.count(
+        Rating.rating_id)).outerjoin(
+            Rating).group_by(Entry.entry_id).order_by(db.func.count(
+                            Rating.rating_id)).all()
+
 
 
 def get_entry_by_id(entry_id):
