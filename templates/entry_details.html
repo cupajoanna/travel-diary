@@ -8,35 +8,25 @@ Blog Entry
 
 {% block body %}
 
+<div class="container-fluid padding">
+  <div class="row padding">
+      <div class="col-lg-6">
 
 
-<h2>Navigation</h2>
-  <ul>
-    <h3>Global Feed</h3>
-    <li><a href="/">Homepage</a></li>
-    <li><a href="/users">View all users</a></li>
-    <li><a href="/entries">View all entries feed</a></li>
-
-    <h3>Personal Suitcase</h3>
-
-    <li><a href="/map">Add to your map</a></li>
-    <li><a href="/your_entries">Edit Your Entries</a></li>
-  </ul>
-
-
-
-<h1>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
+<h2>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
           
           {{ city.city_name }}
-        </a></h1>
+        </a></h2>
+
 
 <h1>Created at : {{created_at }}</h1>
+<br>
 
 <p>
 
 
- <main class="row mx-5 py-4">
-      <div class="col-8 mx-auto p-3 contact-form" >
+ <main class="form">
+      <div class="contact-form" >
         <form action = "/entries/{{entry.entry_id}}/update" method="POST" enctype=multipart/form-data id="form" >
 
 
@@ -92,19 +82,27 @@ Blog Entry
   {%for p in photo%}
 
 <div>
+      <div class="col-lg-6">
 
-       <img src="{{p.photo_url}}">
+       <img src="{{p.photo_url}}" width="700" height="500" class="img-fluid">
        <button id="{{p.photo_id}}" class ="photo_delete"> delete </button>  
 
 </div>
 
   {%endfor%}
 
+  </div>
+
 
 {%endif%}
 
 
 </p>
+</br>
+</div>
+</div>
+</div>
+
 <!-- Scripts -->
 
 <script src="/static/js/photoupload.js"></script>

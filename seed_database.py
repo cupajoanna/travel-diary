@@ -85,21 +85,21 @@ def rating():
         crud.create_rating(liker, entry)
     model.db.session.commit()
 
-# def photo():
+def photo():
 
-#     all_users = crud.get_users()
-#     all_entries = crud.get_entries()
-#     all_cities = crud.get_cities()
+    all_users = crud.get_users()
+    all_entries = crud.get_entries()
+    all_cities = crud.get_cities()
 
-#     for n in range(100):
+    for n in range(100):
 
-#         user = choice(all_users)
-#         entry = choice(all_entries)
-#         photo_url = "www.somepath.com"
-#         city = choice(all_cities)
+        user = choice(all_users)
+        entry = choice(all_entries)
+        photo_url = "https://picsum.photos/500/350?nocache"
+        city = choice(all_cities)
 
-#         photo = crud.create_photo(user, entry, photo_url, city)
-#     model.db.session.commit()
+        photo = crud.create_photo(user, entry, photo_url, city)
+    model.db.session.commit()
     
 
 

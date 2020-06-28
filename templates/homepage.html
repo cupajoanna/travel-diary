@@ -1,24 +1,64 @@
 {% extends 'base.html' %}
 {% block title %}Travel Diary{% endblock %}
 
+
+{%block head%}
+
+{# <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script> #}
+{# 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.0/jquery.typeahead.js"></script>
+ #}
+
+ <script src="/vendor/jquery-typeahead/dist/jquery.typeahead.min.js"></script> 
+ 
+ <script src="/static/js/city_autocompletion.js"></script>
+
+{%endblock%}
+
 {% block body %}
-  <h1>Welcome!</h1>
 
-<h2>Navigation</h2>
-  <ul>
-    <h3>Global Feed</h3>
-    <li><a href="/">Homepage</a></li>
-    <li><a href="/users">View all users</a></li>
-    <li><a href="/entries">View all entries feed</a></li>
-    <li><a href="/cities">View all cities</a></li>
 
-    <h3>Personal Suitcase</h3>
+{# <--- Three column section --> #} #}
 
-    <li><a href="/map">Add to your map</a></li>
-    <li><a href="/your_entries">Edit Your Entries</a></li>
-  </ul>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js" ></script>
+<div class="container-fluid padding">
+
+<div class="row test-center padding">
+
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+
+        <img src="static/img/icon1.png" width="300" height="300">
+
+        <h3>Make maps of your journey</h3>
+
+        <p>The unique map function of Bonvoyaj allows you to incorporate different kinds of maps in your diary, to show people where you’ve been. You can add two types of maps to your journal.</p>
+    </div>
+
+
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+
+        <img src="static/img/icon3.png" width="300" height="300">
+
+         <h3>Share your Journey</h3>
+
+        <p>Add stories to your digital diary and determine for each chapter if you want share it or not. Public chapters are converted to a blog that you can share with family and friends.</p>
+    </div>
+
+    <div class="col-sm-12 col-md-4">
+
+        <img src="static/img/icon2.png" width="300" height="300">
+
+        <h3>Add Photos </h3>
+
+        <p>Complete your diary by adding photos to the stories in diffent layouts. Large pictures or small pictures, portrait pictures or landscape pictures. It’s up to you!</p>
+    </div>
+
+</div>
+
+<hr class="my-4">
+</div>
 
 
 
@@ -42,9 +82,14 @@
       Email <input type="text" name="email">
     </p>
 
-     <p>
-      Home City <input type="home_city" name="home_city" id="city_search_bar" class="typeahead">
-    </p>
+    <p>
+
+     <div id="city_search_bar" >
+      Home City <input type="text" name="home_city" class="typeahead">
+    </div>
+   </p>
+
+
 
 
     <p>
@@ -85,7 +130,6 @@
 
   {%endif%}
 
- <script src="/static/js/typeahead.js"></script>
 
 
 {% endblock %}

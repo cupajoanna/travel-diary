@@ -32,7 +32,7 @@ cloudinary.config.update = ({
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def show_app(path):
-    return render_template('index.html')
+    return render_template('homepage.html')
 
 
 @app.route('/')
@@ -141,6 +141,54 @@ def map_json():
     return jsonify(city_list)
 
 
+
+@app.route("/users/<user_id>/map-json")
+
+def other_user_map_json(user_id):
+
+
+    user_cities = crud.get_user_cities(user_id)
+   
+
+    user_city_list = []
+
+    for city in user_cities:
+        user_city_list.append({'user_id':  session['current_user'],
+                 'city_id': city.city_id,
+                 'city_name': city.city_name,
+                 'user_lat': city.geo_lat,
+                 'user_lng': city.geo_lng})
+
+    print("%"*100)
+    print(user_id)
+    print(user_city_list)
+
+    return jsonify(user_city_list)
+
+
+
+
+# @app.route("/cities-json")
+
+# def cities_json():
+
+#     term = request.args.get('term', '')
+#     print('\n\n\n\n\n',request.args)
+#     res = { 'results': []}
+
+#     cities = crud.get_cities()
+
+
+#     for city in cities:
+#         if term: 
+#             if city.city_name.startswith(term):
+#                 res['results'].append({'id': city.city_id, 'text': city.city_name})
+#             else:
+#                 res['results'].append({'id': city.city_id, 'text': city.city_name})
+
+#     return jsonify(res)
+
+
 @app.route("/cities-json")
 
 def cities_json():
@@ -154,8 +202,6 @@ def cities_json():
         cities.append(city.city_name)
 
     return jsonify(cities)
-
-
 
 """Users"""
 
@@ -173,7 +219,11 @@ def show_user(user_id):
 
     user = crud.get_user_by_id(user_id)
     cities = crud.get_user_cities(user_id)
-    return render_template('user_details.html', user=user, cities=cities)
+    entries = crud.get_user_entries_ordered_by_ratings_count(user_id)[::-1]
+
+
+
+    return render_template('user_details.html', user=user, cities=cities, entries=entries)
 
 """Entries"""
 
@@ -198,9 +248,10 @@ def city_specific_entries(city_id):
 @app.route('/entries/view_only/<entry_id>')
 def view_only_entry(entry_id):
 
-    if session.get('current_user'):
-
         entry = crud.get_entry_by_id(entry_id)
+
+        user = crud.get_user_by_id(entry.user_id)
+
         city_id = entry.city_id
 
         city = crud.get_city_by_id(city_id)
@@ -222,7 +273,7 @@ def view_only_entry(entry_id):
         created_at = str(created_at_raw)[0:10]
 
 
-        return render_template('see_entry_only.html', entry=entry, city=city, photo = photo, total_ratings = total_ratings, created_at= created_at)
+        return render_template('see_entry_only.html', user = user, entry=entry, city=city, photo = photo, total_ratings = total_ratings, created_at= created_at)
 
 
 @app.route('/your_entries')

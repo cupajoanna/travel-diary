@@ -9,42 +9,38 @@ Blog Entry
 {% block body %}
 
 
-
-<h2>Navigation</h2>
-  <ul>
-    <h3>Global Feed</h3>
-    <li><a href="/">Homepage</a></li>
-    <li><a href="/users">View all users</a></li>
-    <li><a href="/entries">View all entries feed</a></li>
-
-    <h3>Personal Suitcase</h3>
-
-    <li><a href="/map">Add to your map</a></li>
-    <li><a href="/your_entries">Edit Your Entries</a></li>
-  </ul>
+<div class="container-fluid padding">
+  <div class="row padding">
+      <div class="col-md-12 col-lg-6">
 
 
-<h1>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
+<h1>Entry for city: <a href="/entries/city_specific/{{ city.city_id }}">
           
           {{ city.city_name }}
         </a></h1>
 
+<h2>See more articles from this user:  <a href="/users/{{ user.user_id }}">
+          
+           {{ user.username }}
+        </a></h2>
 
 
 
 
-<h1>Created at : {{ created_at }}</h1>
+
+<p>Created at : {{ created_at }}<p>
 
 <p>
 
   <h2>{{entry.title}}</h2>
+
 
      <p>
         Number of likes <span id="likes-counter"> {{total_ratings}} </span>
         likes
       </p>
 
-    <button id="add-to-likes-button" class= "add-to-likes-button" value= "{{entry.entry_id}}">
+    <button id="add-to-likes-button" class= "add-to-likes-button" value= "{{entry.entry_id}}" >
     like this entry
     </button>
 
@@ -58,7 +54,7 @@ Blog Entry
 
 <div>
 
-       <img src="{{p.photo_url}}">
+       <img src="{{p.photo_url}}" width="700" height="500">
 
 </div>
 
@@ -69,6 +65,12 @@ Blog Entry
 
 
 </p>
+</p>
+</p>
+</div>
+</div>
+</div>
+
 <!-- Scripts -->
 
 <script src="/static/js/torate.js"></script>

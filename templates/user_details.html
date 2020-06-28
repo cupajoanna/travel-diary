@@ -1,34 +1,93 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ user.email }} - Details{% endblock %}
+{% block head %}
+
+
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<link rel="stylesheet" href="/static/css/maps.css"/>
+
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+
+
+
+{% endblock %}
+
+
+{% block title %}{{ user.email }}User Profile{% endblock %}
+
+
 
 {% block body %}
+<div class="container-fluid padding">
+  <div class="row padding">
+      <div class="col-md-12 col-lg-6">
 
 
-<h2>Navigation</h2>
-  <ul>
-    <h3>Global Feed</h3>
-    <li><a href="/">Homepage</a></li>
-    <li><a href="/users">View all users</a></li>
-    <li><a href="/entries">View all entries feed</a></li>
+          <h2>{{ user.username }}</h2>
 
-    <h3>Personal Suitcase</h3>
-
-    <li><a href="/map">Add to your map</a></li>
-    <li><a href="/your_entries">Edit Your Entries</a></li>
-  </ul>
+          <p>
+            <li>Email: {{ user.email }}</li>
+            <li>User ID: {{user.user_id }}</li>
+            <li>Username: {{user.username}}</li>
+            <li>Home City: {{user.home_city_id}}</li>
+            <li>Cities Travelled: {{cities}}</li>
 
 
+          </p>
 
-<h1>{{ user.email }}</h1>
+          <h2>All Users' Entries</h2>
 
-<p>
-  <li>Email: {{ user.email }}</li>
-  <li>User ID: {{user.user_id }}</li>
-  <li>Username: {{user.username}}</li>
-  <li>Home City: {{user.home_city_id}}</li>
-  <li>Cities Travelled: {{cities}}</li>
-</p>
+            <p>
+              <ul>
+              {% for entry, count in entries %}
+              <li>
+                      <b>
+                        Number of Likes: {{count}}
+                      </b>
+
+                      <a href="/entries/view_only/{{ entry.entry_id }}">
+                        
+                        {{entry.title}}
+                      </a>
+                        {{entry.blog[:100]}}
+
+                         {%for p in entry.photos%}
+
+                         <img src="{{p.photo_url}}" width="700" height="500">
+
+                     {% endfor %}
+
+                    </li>
+                    </p>
+
+              {% endfor %}
+            </ul>
+
+
+              <button id="see-map" value= "{{user.user_id}}" class="btn btn-primary btn-lg">
+              See where this user has gone!
+              </button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+  <div id="map"></div>
+    <script src="/static/js/other-user-maps.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx4bZy24pZfMho7vI4kWPIY7GdCFuU7bs&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+
+
+
 
 
 

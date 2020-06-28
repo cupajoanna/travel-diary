@@ -4,47 +4,71 @@
 {% block body %}
 
 
-<h2>Navigation</h2>
-  <ul>
-    <h3>Global Feed</h3>
-    <li><a href="/">Homepage</a></li>
-    <li><a href="/users">View all users</a></li>
-    <li><a href="/entries">View all entries feed</a></li>
+<div class="container-fluid padding">
+  <div class="row welcome text-center">
+      <div class="col-md-12">
 
-    <h3>Personal Suitcase</h3>
 
-    <li><a href="/map">Add to your map</a></li>
-    <li><a href="/your_entries">Edit Your Entries</a></li>
-  </ul>
+
+
+  <h1 class="display-4">All Users' Entries</h1>
+
+</div>
+</div>
+</div>
+
+{# <---- cards ---> #}
+
+<div class="container-fluid padding">
+<div class="row padding">
+
+<br>
+
+
   
-
-  <h1>All Users' Entries</h1>
-
-  <p>
-    <ul>
     {% for entry, count in entries %}
-    <li>
-            <b>
-              Number of Likes: {{count}}
-            </b>
 
-            <a href="/entries/view_only/{{ entry.entry_id }}">
+
+          {%for p in entry.photos%}
+          <div class="col-xs-12 col-sm-6 col-md-4">
+
+              <img src="{{p.photo_url}}" width="500" height="350">
+                {% endfor %}
+                
+{#               <div class="card-body"> #}
+
+
+                <h4 class="card-title">    <a href="/entries/view_only/{{ entry.entry_id }}">{{entry.title}}    </a></h4>
+
+
+                    <b>
+                      Number of Likes: {{count}}
+                    </b>
+
+                    
+                    {{entry.blog[:100]}}
+          {#               {{entry.created_at}} #}
+                
               
-              {{entry.title}}
-            </a>
-              {{entry.blog[:100]}}
-              {{entry.created_at}}
+               <a href='#' class="btn btn-outline secondary"> See Profile </a>
 
-               {%for p in entry.photos%}
-
-               <img src="{{p.photo_url}}">
-
-           {% endfor %}
-
-          </li>
-          </p>
+          </div>
 
 
     {% endfor %}
-  </ul>
+
+</br>
+      </div>
+
+
+
+ 
+<hr class="my-4">
+
+
+</div>
+
+
 {% endblock body %}
+
+

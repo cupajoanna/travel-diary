@@ -38,6 +38,13 @@ def get_city_entries_ordered_by_ratings_count(city_id):
                     Entry.entry_id).order_by(db.func.count(
                             Rating.rating_id)).all()
 
+def get_user_entries_ordered_by_ratings_count(user_id):
+    return db.session.query(Entry, db.func.count(
+        Rating.rating_id)).outerjoin(
+            Rating).filter(Entry.user_id == user_id).group_by(
+                    Entry.entry_id).order_by(db.func.count(
+                            Rating.rating_id)).all()
+
 
 def create_city(city_name, country_name, geo_lat, geo_lng):
 
