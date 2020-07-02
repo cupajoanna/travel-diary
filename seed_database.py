@@ -43,7 +43,7 @@ def user():
     all_cities = crud.get_cities()
 
 
-    for n in range(1,100):
+    for n in range(1,3):
         print(n)
         email = f'user{n}@test.com'  # Voila! A unique email!
         password = 'test'
@@ -63,7 +63,7 @@ def entry():
     all_users = crud.get_users()
     all_cities = crud.get_cities()
 
-    for n in range(100):
+    for n in range(3):
         user = choice(all_users)
         blog = "entry to be updated"
         title = "title to be updated"
@@ -77,7 +77,7 @@ def rating():
     all_users = crud.get_users()
     all_entries = crud.get_entries()
 
-    for n in range(100):
+    for n in range(3):
 
         liker = choice(all_users)
         entry = choice(all_entries)
@@ -91,7 +91,7 @@ def photo():
     all_entries = crud.get_entries()
     all_cities = crud.get_cities()
 
-    for n in range(100):
+    for n in range(3):
 
         user = choice(all_users)
         entry = choice(all_entries)
@@ -102,7 +102,23 @@ def photo():
     model.db.session.commit()
     
 
+def profile():
 
+    all_users = crud.get_users()
+    all_cities = crud.get_cities()
+
+    for n in range(3):
+
+        user = choice(all_users)
+        profile_photo = "https://picsum.photos/500/350?nocache"
+        description = "to be updated"
+        instagram = "to be updated"
+        twitter = "to be updated"
+        website = "to be updated"
+
+        photo = crud.create_profile(user, profile_photo, description, instagram, twitter, website)
+    model.db.session.commit()
+    
 
 
 # create_db()
@@ -112,7 +128,8 @@ city()
 user()
 entry()
 rating()
-# photo()
+photo()
+profile()
 
 
 

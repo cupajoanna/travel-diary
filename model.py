@@ -35,6 +35,28 @@ class User(db.Model):
         return f'<User user_id={self.user_id} username={self.username} email={self.email} home_city_id={self.home_city_id} created_at={self.created_at}>'
 
 
+
+class Profile(db.Model):
+    """A user's profile."""
+
+    __tablename__ = 'profiles'
+
+    profile_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    profile_photo = db.Column(db.String)
+    description = db.Column(db.String)
+    instagram = db.Column(db.String)
+    twitter = db.Column(db.String)
+    website = db.Column(db.String)
+
+
+    user = db.relationship('User', backref='profiles')
+
+    def __repr__(self):
+        return f'<Profile user_id={self.user_id} description={self.description}>'
+
+
+
 class Rating(db.Model):
     """A rating."""
 

@@ -15,6 +15,10 @@
   crossorigin="anonymous"></script>
 
 
+{# for city search for user name change #}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
 
 {% endblock %}
 
@@ -38,18 +42,163 @@
             <li>Home City: {{user.home_city_id}}</li>
             <li>Cities Travelled: 
 
-            {% for city in cities %}
+                  {% for city in cities %}
 
-          • {{city.city_name}} 
+                • {{city.city_name}} 
 
-           {% endfor %}
-
-
+                 {% endfor %}
 
           </li>
 
+          {%if profile%} 
+                <li><img src="{{profile.profile_photo}}" width="300" height="300"></li>
+                <li>{{profile.description}}</li>
+                <li>{{profile.instagram}}</li>
+                <li>{{profile.twitter}}</li>
+                <li>{{profile.website}}</li>
+
+          {%endif%}
+
 
           </p>
+
+{#           button to change user details #}
+
+
+              <button id="myBtn">Change User Details</button>
+
+              <!-- The Modal -->
+              <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <div>
+                    
+{# is there where the forms goes? #}
+
+                      
+                  <form action="/users/{{user.user_id}}/update" method="POST" enctype=multipart/form-data id="form" class="contact100-form validate-form">
+
+                    <p>
+                      Change Email <textarea type="text" name="email">
+                        
+                    {%if user.email%}
+                           {{user.email}}
+
+                      {%endif%}
+
+                      </textarea>
+                    </p>
+
+
+                    <p>
+                      Change Username <textarea type="username" name="username">        
+                        {%if user.username%}
+                           {{user.username}}
+
+                      {%endif%}
+
+                      </textarea>
+                    </p>
+
+
+
+                    <p>
+                     Change Password <textarea type="password" name="password">            {%if user.password%}
+                           {{user.password}}
+
+                      {%endif%}
+
+                      </textarea>
+                    </p>
+
+                    <p>
+                     Change Home City  <select name="city_search" id="city_search" class="city_search_bar" multiple="multiple">
+                       
+                       {%if user.city%}
+                           {{user.city.city_name}}
+
+                      {%endif%}
+
+
+                     </select>
+                  </p>
+
+
+
+
+                    <p>
+                     Change Description <textarea type="description" name="description">
+                      {%if profile%}
+                           {{profile.description}}
+
+                      {%endif%}
+
+                      </textarea>
+                    </p>
+
+
+                    <p>
+                     Change Instagram <textarea type="instagram" name="instagram">
+                      {%if profile%}
+                           {{profile.instagram}}
+
+                      {%endif%}
+
+                      </textarea>
+                    </p>
+
+
+                    <p>
+                     Change Twitter <textarea type="twitter" name="Twitter">
+                    {%if profile%}
+                           {{profile.twitter}}
+
+                      {%endif%}
+
+                      </textarea>
+                    </p>
+
+
+                    <p>
+                     Change Website <textarea type="website" name="website">
+                     {%if profile%}
+                           {{profile.website}}
+
+                      {%endif%}
+
+                      </textarea>
+                    </p>
+
+
+
+
+                    
+            <div>
+            <label for="image_upload" class="lead">Change Profile Photo</label>
+               
+            <input id= "image-upload" type="file" name="image_upload">
+            </div>
+
+
+
+                    <p>
+                      
+                  <button class="btn btn-primary btn-lg" type="submit" id="file_submit">Submit Changes
+                  </button>
+
+                    </p>
+                  </form>
+
+
+
+                  </div>
+                </div>
+
+              </div>
+
+
 
           <h2>All Users' Entries</h2>
 
@@ -91,6 +240,7 @@
 
   <div id="map"></div>
     <script src="/static/js/maps.js"></script>
+      <script src="/static/js/changeprofile.js"></script>
     <script src="/static/js/other-user-maps.js"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx4bZy24pZfMho7vI4kWPIY7GdCFuU7bs&callback=initMap&libraries=&v=weekly"
@@ -98,7 +248,9 @@
     ></script>
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+ <script src="/static/js/city_autocompletion.js"></script>
+ <script src="/static/js/photoupload.js"></script>
 
 
 

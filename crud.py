@@ -1,4 +1,4 @@
-from model import db, User, Entry, Rating, City, Photo, connect_to_db
+from model import db, User, Entry, Rating, City, Photo, Profile, connect_to_db
 
 """User functions"""
 
@@ -12,16 +12,80 @@ def create_user(email, password, username, city):
 
     return user
 
+
 def get_users():
     return User.query.all()
 
 def get_user_by_id(user_id):
     return User.query.get(user_id)
 
+def get_user_profile(user_id):
+    return db.session.query(Profile).filter(Profile.user_id == user_id).first()
+
+
 def get_user_by_email(email):
     """Return a user by email."""
 
     return User.query.filter(User.email == email).first()
+
+
+def update_user(user, email, password, username, city):
+
+    update_this = User.query.get(user.user_id)
+    print(update_this)
+
+    if email:
+        update_this.email = email
+
+    if password:
+        update_this.password= password
+
+    if username:
+        update_this.username = username
+
+    if city:
+        update_this.city = city.city_id
+
+        db.session.commit()
+
+    return update_this
+
+
+
+def create_profile(user, description, instagram, twitter, website, profile_photo ="https://picsum.photos/500/350?nocache"):
+ 
+    profile = Profile(user=user, profile_photo=profile_photo, description=description, instagram=instagram, twitter=twitter, website=website)
+
+    db.session.add(profile)
+    db.session.commit()
+    return profile
+
+
+def update_profile(user, profile_photo, description, instagram, twitter, website):
+
+    update_this = Profile.query.filter(Profile.user_id == user.user_id)
+    print(update_this)
+
+    if profile_photo:
+        update_this.profile_photo = profile_photo
+
+    if description:
+        update_this.description= description
+
+    if instagram:
+        update_this.instagram = instagram
+
+    if twitter:
+        update_this.twitter = twitter
+
+    if website:
+        update_this.website = website
+
+
+    db.session.commit()
+
+    return update_this
+    
 
 """City functions"""
 
@@ -129,8 +193,12 @@ def update_entry(new_entry, new_title, entry_id):
     update_this = Entry.query.get(entry_id)
     print(update_this)
 
-    update_this.blog = new_entry
-    update_this.title = new_title
+    if new_entry:
+
+        update_this.blog = new_entry
+
+    if new_title:
+        update_this.title = new_title
 
     db.session.commit()
 
