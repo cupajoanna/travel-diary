@@ -21,12 +21,13 @@
 {% block body %}
   
 
-    <button id="geocode-address" style="z-index:2; position:absolute">
+    <button id="geocode-address" class="btn btn-primary btn-lg" style="z-index:20; position:absolute">
     add a new city!
     </button>
 
     <div id="map"></div>
     <script src="/static/js/maps.js"></script>
+    <script src="/static/js/current-user-maps.js"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx4bZy24pZfMho7vI4kWPIY7GdCFuU7bs&callback=initMap&libraries=&v=weekly"
       defer

@@ -8,90 +8,104 @@ Blog Entry
 
 {% block body %}
 
-<div class="container-fluid padding">
+{# <div class="container-fluid padding">
   <div class="row padding">
       <div class="col-lg-6">
+ #}
 
 
-<h2>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
-          
-          {{ city.city_name }}
-        </a></h2>
+<div class="container-contact100">
+    <div class="wrap-contact100">
+
+        <span class="contact100-form-title">
+
+          <h4>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
+                    
+                    {{ city.city_name }}</a></h4>
 
 
-<h1>Created at : {{created_at }}</h1>
-<br>
-
-<p>
+          <h5>Created at : {{created_at }}</h5>
+        </span>
 
 
- <main class="form">
+
+        <br>
+
+    <p>
+     <main class="form">
       <div class="contact-form" >
-        <form action = "/entries/{{entry.entry_id}}/update" method="POST" enctype=multipart/form-data id="form" >
+      <form action = "/entries/{{entry.entry_id}}/update" method="POST" enctype=multipart/form-data id="form" class="contact100-form validate-form">
 
 
-            </div>
-          </div>
+              <div class="wrap-input100 validate-input" data-validate="Name is required">
+              <br>
+                <span class="label-input100">Your Blog Title</span>
+              </br>
+                  
+                  <textarea class="blog_title" type="text" name="blog_title" id= "blog_title"placeholder="blog_title">
+                      {%if entry.title%}
+                           {{entry.title}}
 
-          <div class="mb-3">
-            <label for="blog_entry" class="lead">Your blog title</label>
-            <textarea id="blog_title" name = "blog_title" class="blog_title">
-
-              {%if entry.title%}
-              {{entry.title}}
-
-              {%endif%}
-            </textarea>
-          </div>
+                      {%endif%}
+                  </textarea>
 
 
-          <div class="mb-3">
-            <label for="blog_entry" class="lead">Your blog here:</label>
-            <textarea id="blog_entry" name="blog_entry" class="form-control" rows="4">
+              <span class="focus-input100"></span>
+              </div>
 
-              {%if entry.blog%}
-              {{entry.blog}}
 
-              {%endif%}
-            </textarea>
 
-          </div>
+              <div class="wrap-input100 validate-input" data-validate = "Message is required">
+              <br>
+                <span class="label-input100">Blog Entry</span>
+              </br>
+                      <textarea class="blog_entry" name="blog_entry" id= "blog_entry">
+                          
+                          {%if entry.blog%}
+                               {{entry.blog}}
 
-            <div class="mb-3">
+                          {%endif%}
 
+                      </textarea>
+              <span class="focus-input100"></span>
+              </div>
+
+
+
+            <div>
             <label for="image_upload" class="lead">Upload your photos</label>
-           
-                    <input id= 'image-upload' type=file name=image_upload>
+               
+            <input id= "image-upload" type="file" name="image_upload">
+            </div>
 
-          </div>
-
-
-          <hr class="my-4">
-          <input type = "submit" id = "file_submit" class="mb-3 btn btn-primary btn-lg btn-block">
-        </form>
-
-      </div>
-    </main>
-
-  <h2>{{entry.title}}</h2>
-
-  {{ entry.blog }}
-
+            <input type = "submit" id = "file_submit" class="btn btn-primary btn-lg">
+      </form>
+  </div>
+</main>
+</p>
 
 {%if photo%} 
+
+  <h1>{{entry.title}}</h1>
+<p>
+  {{ entry.blog }}
+</p>
+
+
+
   {%for p in photo%}
 
 <div>
-      <div class="col-lg-6">
+  <div class="col-lg-6">
 
        <img src="{{p.photo_url}}" width="700" height="500" class="img-fluid">
        <button id="{{p.photo_id}}" class ="photo_delete"> delete </button>  
 
-</div>
+  </div>
 
   {%endfor%}
 
-  </div>
+</div>
 
 
 {%endif%}
@@ -99,9 +113,9 @@ Blog Entry
 
 </p>
 </br>
+{# </div>
 </div>
-</div>
-</div>
+</div> #}
 
 <!-- Scripts -->
 

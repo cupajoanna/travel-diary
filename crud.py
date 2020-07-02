@@ -66,6 +66,12 @@ def get_cities():
 
     return City.query.all()
 
+
+def search_cities(term):
+
+    return City.query.filter(City.city_name.like(f'%{term}%')).all()
+
+
 def get_city_by_id(city_id):
     return City.query.get(city_id)
 
@@ -101,6 +107,7 @@ def get_all_entries_ordered_by_ratings_count():
         Rating.rating_id)).outerjoin(
             Rating).group_by(Entry.entry_id).order_by(db.func.count(
                             Rating.rating_id)).all()
+
 
 
 

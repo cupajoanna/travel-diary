@@ -37,18 +37,7 @@ var map;
       zoom: 3
     });
 
-  $.get("/map-json", function(res){
 
-    console.log(res)
-
-
-  for (var i = 0; i < res.length;i++){
-    addMarker({
-              coords: {lat: res[i].user_lat, lng: res[i].user_lng},
-              content: '<h1>'+ res[i].city_name + '</h1>',
-              cityId: res[i].city_id 
-            });
-        }});
 
 
  $('#geocode-address').on('click', () => {
@@ -72,8 +61,8 @@ geocoder.geocode({ address: userAddress }, (results, status) => {
 
 
 var infoWindow = new google.maps.InfoWindow({
-content:`<h1> ${locationName} </h1>` +  
-    `<button id="locationButton" onclick="createEntry('${locationName}')">Create an entry</button>`
+content:`<h4> ${locationName} </h4>` +  
+    `<button id="locationButton" class="btn btn-primary btn-lg" onclick="createEntry('${locationName}')">Create an entry</button>`
 
 });
 
@@ -101,9 +90,9 @@ map.setZoom(3);
 
 
 
-      
+    };
 
-function addMarker(props){
+  function addMarker(props){
       var marker = new google.maps.Marker({
       position: props.coords,
       map:map,
@@ -122,7 +111,7 @@ function addMarker(props){
       if(props.content){
 
         var infoWindow = new google.maps.InfoWindow({
-        content: `<h1> ${props.content} </h1>` +  
+        content: `<h4> ${props.content} </h4>` +  
     `<button id="routeToEntry" onclick="seeEntry(${props.cityId})">see your entry</button>`
 
 
@@ -136,8 +125,4 @@ function addMarker(props){
       })};
 
       }
-
-
-    };
-
 

@@ -16,39 +16,78 @@
 
 
 <div class="container-fluid padding">
-  <div class="row padding">
-      <div class="col-md-12 col-lg-6">
+  <div class="row welcome text-center">
+      <div class="col-md-12">
 
 
-  <h1>All of your Entries</h1>
+   <h5>All of your Entries</h5>
 
-  <ul>
-    {% for entry in entries %}
-      <li>
-        <a href="/entries/{{ entry.entry_id }}">
-          
-          {{entry.title}}
-        </a>
-          {{entry.blog[:100]}}
-{#           {{entry.created_at}} #}
+
+
+</div>
+</div>
+</div>
+
+
+<button class="btn btn-primary btn-lg">
+       
+<a href="/map"> Create an Entry! </a>
+</button>
+
+
+
+{# <---- cards ---> #}
+
+<div class="container-fluid padding">
+<div class="row padding">
+
+<br>
+
+
+  
+    {% for entry, count in entries %}
+
 
           {%for p in entry.photos%}
+          <div class="col-xs-12 col-sm-6 col-md-4">
 
-               <img src="{{p.photo_url}}" width="700" height="500">
+              <img src="{{p.photo_url}}" width="500" height="350">
+                {% endfor %}
+                
+{#               <div class="card-body"> #}
 
-           {% endfor %}
+
+                <h4 class="card-title">    <a href="/entries/view_only/{{ entry.entry_id }}">{{entry.title}}    </a></h4>
 
 
-      </li>
+                    <b>
+                      Number of Likes: {{count}}
+                    </b>
+
+                    
+                    {{entry.blog[:100]}}
+          {#               {{entry.created_at}} #}
+                
+              
+               
+
+          </div>
+
 
     {% endfor %}
-  </ul>
+
+</br>
+      </div>
+
+
+
+ 
+<hr class="my-4">
+
 
 </div>
-</div>
-</div>
 
 
+{% endblock body %}
 
 
-{% endblock %} 

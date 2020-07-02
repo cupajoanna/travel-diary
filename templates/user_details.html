@@ -36,7 +36,17 @@
             <li>User ID: {{user.user_id }}</li>
             <li>Username: {{user.username}}</li>
             <li>Home City: {{user.home_city_id}}</li>
-            <li>Cities Travelled: {{cities}}</li>
+            <li>Cities Travelled: 
+
+            {% for city in cities %}
+
+          • {{city.city_name}} 
+
+           {% endfor %}
+
+
+
+          </li>
 
 
           </p>
@@ -80,6 +90,7 @@
 
 
   <div id="map"></div>
+    <script src="/static/js/maps.js"></script>
     <script src="/static/js/other-user-maps.js"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx4bZy24pZfMho7vI4kWPIY7GdCFuU7bs&callback=initMap&libraries=&v=weekly"

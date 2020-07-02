@@ -21,7 +21,6 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-# API_KEY = os.environ.get("CLOUDINARY_API_KEY")
 
 cloudinary.config.update = ({
     'cloud_name':os.environ.get('CLOUDINARY_CLOUD_NAME'),
@@ -49,7 +48,7 @@ def register_user():
     email = request.form.get('email')
     password = request.form.get('password')
     username = request.form.get('username')
-    city_name = request.form.get('home_city')
+    city_name = request.form.get('city-search')
 
     city = crud.get_city_by_name(city_name)
  
@@ -76,11 +75,14 @@ def login():
 
     user = crud.get_user_by_email(email)
 
-    if password_check == user.password:
+
+    if user and password_check == user.password:
         session['current_user'] = user.user_id
         flash('logged in!')
+
     else:
-        flash('error')
+
+        flash('invalid email or password')
 
     return redirect('/')
 
@@ -146,6 +148,8 @@ def map_json():
 
 def other_user_map_json(user_id):
 
+    print("user_id:", user_id)
+
 
     user_cities = crud.get_user_cities(user_id)
    
@@ -168,40 +172,24 @@ def other_user_map_json(user_id):
 
 
 
-# @app.route("/cities-json")
-
-# def cities_json():
-
-#     term = request.args.get('term', '')
-#     print('\n\n\n\n\n',request.args)
-#     res = { 'results': []}
-
-#     cities = crud.get_cities()
-
-
-#     for city in cities:
-#         if term: 
-#             if city.city_name.startswith(term):
-#                 res['results'].append({'id': city.city_id, 'text': city.city_name})
-#             else:
-#                 res['results'].append({'id': city.city_id, 'text': city.city_name})
-
-#     return jsonify(res)
-
-
 @app.route("/cities-json")
 
 def cities_json():
 
+    term = request.args.get('search_term', '')
+    print('\n\n\n\n\n',request.args)
+    res = { 'results': []}
 
-    all_cities = crud.get_cities()
+    cities = crud.search_cities(term)
 
-    cities = []
 
-    for city in all_cities:
-        cities.append(city.city_name)
+    for city in cities:
+        res['results'].append({'id': city.city_id, 'text': city.city_name})
+      
 
-    return jsonify(cities)
+    return jsonify(res)
+
+
 
 """Users"""
 
@@ -280,17 +268,11 @@ def view_only_entry(entry_id):
 def your_entries():
 
     user_id = session['current_user']
-    entries = crud.get_user_entries(user_id)
+    
+    entries = crud.get_user_entries_ordered_by_ratings_count(user_id)[::-1]
 
     return render_template('your_entries.html', entries=entries)
 
-
-
-    # if session.get('current_user'):
-
-    #     entries = crud.get_entries()
-
-    # return redirect('/')
 
 @app.route('/entries/<entry_id>')
 def show_entry(entry_id):
@@ -400,6 +382,11 @@ def update_blog(entry_id):
     new_entry = request.form.get('blog_entry')
 
     image_uploaded = request.files.get('image_upload')
+    print("!"*100)
+
+    print(new_title)
+    print(new_entry)
+    print(image_uploaded)
 
     if image_uploaded:
         response = cloudinary.uploader.upload(image_uploaded)
