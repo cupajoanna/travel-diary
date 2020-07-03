@@ -52,9 +52,11 @@ def update_user(user, email, password, username, city):
 
 
 
+
+
 def create_profile(user, description, instagram, twitter, website, profile_photo ="https://picsum.photos/500/350?nocache"):
  
-    profile = Profile(user=user, profile_photo=profile_photo, description=description, instagram=instagram, twitter=twitter, website=website)
+    profile = Profile(user=user, description=description, instagram=instagram, twitter=twitter, website=website, profile_photo=profile_photo)
 
     db.session.add(profile)
     db.session.commit()
@@ -63,7 +65,7 @@ def create_profile(user, description, instagram, twitter, website, profile_photo
 
 def update_profile(user, profile_photo, description, instagram, twitter, website):
 
-    update_this = Profile.query.filter(Profile.user_id == user.user_id)
+    update_this = Profile.query.filter(Profile.user_id == user.user_id).first()
     print(update_this)
 
     if profile_photo:

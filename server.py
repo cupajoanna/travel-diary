@@ -193,9 +193,10 @@ def cities_json():
 @app.route('/users')
 def all_users():
 
-    users = crud.get_users()
+    users = crud.get_users()[::-1]
 
     return render_template('all_users.html', users=users)
+    
 
 @app.route('/users/<user_id>')
 def show_user(user_id):
@@ -211,53 +212,6 @@ def show_user(user_id):
 
 
     return render_template('user_details.html', user=user, cities=cities, entries=entries, profile=profile)
-
-
-@app.route('/users/<user_id>/update', methods=['POST'])
-def update_user(user_id):
-
-    
-    user = crud.get_user_by_id(user_id)
-    new_email = request.form.get('email')
-    new_username = request.form.get('username')
-    new_password = request.form.get('password')
-    new_city = request.form.get('city_search')
-
-    city = crud.get_city_by_name(new_city)
-
-    image_uploaded = request.files.get('image_upload')
-    new_description = request.form.get('description')
-    new_instagram = request.form.get('instagram')
-    new_twitter = request.form.get('twitter')
-    new_website = request.form.get('website')
-
-    profile = crud.get_user_profile(user_id)
-
-    print(image_uploaded)
-    print("*"*100)
-
-    returned_url = None
-
-    if image_uploaded:
-        response = cloudinary.uploader.upload(image_uploaded)
-        returned_url = response['url']
-
-
-    msg = ""
-
-    crud.update_user(user, new_email, new_password, new_username, city)
-
-    if not profile:
-        crud.create_profile(user, new_description, new_instagram, new_twitter, new_website, returned_url)
-        msg = "user details created"
-    
-    else:
-        crud.update_profile(user, returned_url, new_description, new_instagram, new_twitter, new_website)
-        msg = "user details updated"
-
-    flash(msg)
-
-    return redirect('/users/{}'.format(user_id))
 
 
 
@@ -312,14 +266,68 @@ def view_only_entry(entry_id):
         return render_template('see_entry_only.html', user = user, entry=entry, city=city, photo = photo, total_ratings = total_ratings, created_at= created_at)
 
 
-@app.route('/your_entries')
+@app.route('/users/your_entries')
 def your_entries():
 
     user_id = session['current_user']
+    user = crud.get_user_by_id(user_id)
+    cities = crud.get_user_cities(user_id)
+    profile = crud.get_user_profile(user_id)
     
     entries = crud.get_user_entries_ordered_by_ratings_count(user_id)[::-1]
 
-    return render_template('your_entries.html', entries=entries)
+    return render_template('your_entries.html', entries=entries, user=user, cities=cities, profile=profile)
+
+@app.route('/users/your_entries/update', methods=['POST'])
+def update_details():
+
+    
+    user_id = session['current_user']
+    user = crud.get_user_by_id(user_id)
+
+    new_email = request.form.get('email')
+    new_username = request.form.get('username')
+    new_password = request.form.get('password')
+    new_city = request.form.get('city_search')
+
+    city = crud.get_city_by_name(new_city)
+
+    image_uploaded = request.files.get('image_upload')
+    new_description = request.form.get('description')
+    new_instagram = request.form.get('instagram')
+    new_twitter = request.form.get('twitter')
+    new_website = request.form.get('website')
+
+    profile = crud.get_user_profile(user_id)
+
+    print(image_uploaded)
+    print(new_twitter)
+    print("*"*100)
+
+    returned_url = None
+
+    if image_uploaded:
+        response = cloudinary.uploader.upload(image_uploaded)
+        returned_url = response['url']
+
+
+    msg = ""
+
+    crud.update_user(user, new_email, new_password, new_username, city)
+
+    if not profile:
+        crud.create_profile(user, new_description, new_instagram, new_twitter, new_website, returned_url)
+        msg = "user details created"
+    
+    else:
+        crud.update_profile(user, returned_url, new_description, new_instagram, new_twitter, new_website)
+        msg = "user details updated"
+
+    flash(msg)
+
+    return redirect('/users/your_entries')
+
+
 
 
 @app.route('/entries/<entry_id>')

@@ -37,14 +37,14 @@ html, body{
   font-size: 500%;
   color:white;
   text-transform: uppercase;
-  text-shadow: 20px 5px 55px #000;
+  text-shadow: 20px 15px 55px #000;
 }
 
 
-.carousel-caption h3{
+.carousel-caption h9{
   font-size: 200%;
   font-weight: 500;
-  text-shadow: 10px 5px 40px #000
+  text-shadow: 30px 15px 40px #000
   padding-bottom: 1rem;
 }
 
@@ -81,6 +81,12 @@ a {
 /*    text-shadow: 5px 2px 15px */
 }
 
+h3 {
+  margin-top: 0;
+  margin-bottom: $headings-margin-bottom;
+  color: #73937E;
+}
+
 h2, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: $headings-margin-bottom;
@@ -92,6 +98,17 @@ h7 {
   color: white;
   text-shadow: 15px 20px 15px 
 }
+
+body {
+    margin: 0;
+    font-family: Helvetica;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4D636A;
+    text-align: center;
+}
+
 
 .jumbotron{
   padding: 1rem;
@@ -117,7 +134,15 @@ h7 {
   margin-bottom: 1rem;
 }
 
+.fun{
+  width: 100%;
+  margin-bottom: 2rem;
 
+}
+
+.gif{
+  max-width: 100%;
+}
 
 /*---Media Queries --*/
 @media (max-width: 992px) {
@@ -129,6 +154,12 @@ h7 {
 @media (max-width: 576px) {
   
 }
+
+.social a{
+  font-size: 4.5em;
+  padding: 3rem;
+}
+
 
 
 /*---Firefox Bug Fix --*/
@@ -201,6 +232,12 @@ textarea {
     resize: vertical;
     width: 70%;
 }
+
+
+.avatar-img {
+  border-radius: 50%;
+}
+
 /*------------------------------------------------------------------
 [ Input ]*/
 

@@ -17,7 +17,7 @@
 
 {# for city search for user name change #}
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{# <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" /> #}
 
 
 {% endblock %}
@@ -28,211 +28,148 @@
 
 
 {% block body %}
+{# <div class="container-fluid padding">
+  <div class="row welcome text-center">
+      <div class="col-md-12"> #}
+
+<div id="emoji">
 <div class="container-fluid padding">
-  <div class="row padding">
-      <div class="col-md-12 col-lg-6">
+  <div class="row text-center">
+  
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+
+          {%if profile%} 
+                <img src="{{profile.profile_photo}}" width="300" height="300" alt="Avatar" class="avatar-img">
+    </div>
+
+    
+      <div class="col-xs-12 col-sm-6 col-md-4">
 
 
-          <h2>{{ user.username }}</h2>
+                <h2>{{ user.username }}</h2>
 
-          <p>
-            <li>Email: {{ user.email }}</li>
-            <li>User ID: {{user.user_id }}</li>
-            <li>Username: {{user.username}}</li>
-            <li>Home City: {{user.home_city_id}}</li>
-            <li>Cities Travelled: 
+                <br> {{profile.description}}</br>
+
+
+                <br><img src="https://cdn1.iconfinder.com/data/icons/real-estate-84/64/x-24-512.png" width="30" height="30"> {{user.city.city_name}} </br>
+
+                <br><a href="https://instagram.com/{{profile.instagram}}"><img src="https://image.flaticon.com/icons/svg/87/87390.svg" width="30" height="28"></a>
+
+
+                <img src="/static/img/buffer.png" width="15" height="15"></a>
+         
+
+                    <a href="https://twitter.com/{{profile.twitter}}"><img src="https://webstockreview.net/images600_/round-twitter-icon-png-14.png" width="30" height="30"></a> 
+
+              <img src="/static/img/buffer.png" width="15" height="15"></a>
+
+                    <a href="https://{{profile.website}}"><img src="https://cdn4.iconfinder.com/data/icons/glyph-ui-document-1/128/bag-512.png" width="40" height="40"></a> 
+
+                    <img src="/static/img/buffer.png" width="15" height="15"></a>
+             
+
+                    <a href="https://{{ user.email }} "><img src="https://cdn3.iconfinder.com/data/icons/user-interface-web-1/550/web-circle-circular-round_67-512.png" width="35" height="35"></a>  
+              </br>
+              
+    
+
+          {%endif%}
+    
+
+    </div>
+
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+  
+            
+
+<h2>most recent destinations</h2>
+
+
+<br> </br>
+
+
+<ul style="list-style-type:none;">
 
                   {% for city in cities %}
 
-                • {{city.city_name}} 
+{#                         <li> {{city.city_name}} </li> #}
+
+<li><img src="https://cdn0.iconfinder.com/data/icons/exotic-flowers-and-plants/514/monstera-512.png" width="20" height="20"> {{city.city_name}} </li>
+
+
 
                  {% endfor %}
-
-          </li>
-
-          {%if profile%} 
-                <li><img src="{{profile.profile_photo}}" width="300" height="300"></li>
-                <li>{{profile.description}}</li>
-                <li>{{profile.instagram}}</li>
-                <li>{{profile.twitter}}</li>
-                <li>{{profile.website}}</li>
-
-          {%endif%}
+</ul>
 
 
-          </p>
-
-{#           button to change user details #}
-
-
-              <button id="myBtn">Change User Details</button>
-
-              <!-- The Modal -->
-              <div id="myModal" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-content">
-                  <span class="close">&times;</span>
-                  <div>
-                    
-{# is there where the forms goes? #}
-
-                      
-                  <form action="/users/{{user.user_id}}/update" method="POST" enctype=multipart/form-data id="form" class="contact100-form validate-form">
-
-                    <p>
-                      Change Email <textarea type="text" name="email">
-                        
-                    {%if user.email%}
-                           {{user.email}}
-
-                      {%endif%}
-
-                      </textarea>
-                    </p>
+  </div>
+</div>
 
 
-                    <p>
-                      Change Username <textarea type="username" name="username">        
-                        {%if user.username%}
-                           {{user.username}}
-
-                      {%endif%}
-
-                      </textarea>
-                    </p>
-
-
-
-                    <p>
-                     Change Password <textarea type="password" name="password">            {%if user.password%}
-                           {{user.password}}
-
-                      {%endif%}
-
-                      </textarea>
-                    </p>
-
-                    <p>
-                     Change Home City  <select name="city_search" id="city_search" class="city_search_bar" multiple="multiple">
-                       
-                       {%if user.city%}
-                           {{user.city.city_name}}
-
-                      {%endif%}
-
-
-                     </select>
-                  </p>
+</div>
+</div>
 
 
 
 
-                    <p>
-                     Change Description <textarea type="description" name="description">
-                      {%if profile%}
-                           {{profile.description}}
-
-                      {%endif%}
-
-                      </textarea>
-                    </p>
+<h2>All of your Entries</h2>
 
 
-                    <p>
-                     Change Instagram <textarea type="instagram" name="instagram">
-                      {%if profile%}
-                           {{profile.instagram}}
+{# <---- cards ---> #}
 
-                      {%endif%}
+<div class="container-fluid padding">
+<div class="row padding">
 
-                      </textarea>
-                    </p>
+<br>
 
 
-                    <p>
-                     Change Twitter <textarea type="twitter" name="Twitter">
-                    {%if profile%}
-                           {{profile.twitter}}
-
-                      {%endif%}
-
-                      </textarea>
-                    </p>
+  
+    {% for entry, count in entries %}
 
 
-                    <p>
-                     Change Website <textarea type="website" name="website">
-                     {%if profile%}
-                           {{profile.website}}
+          {%for p in entry.photos%}
+          <div class="col-xs-12 col-sm-6 col-md-4">
 
-                      {%endif%}
-
-                      </textarea>
-                    </p>
+              <img src="{{p.photo_url}}" width="500" height="350">
+                {% endfor %}
+                
+{#               <div class="card-body"> #}
 
 
+                <h4 class="card-title">    <a href="/entries/view_only/{{ entry.entry_id }}">{{entry.title}}    </a></h4>
 
+
+                    <b>
+                      Number of Likes: {{count}}
+                    </b>
 
                     
-            <div>
-            <label for="image_upload" class="lead">Change Profile Photo</label>
+                    {{entry.blog[:100]}}
+          {#               {{entry.created_at}} #}
+                
+              
                
-            <input id= "image-upload" type="file" name="image_upload">
-            </div>
+
+          </div>
+
+
+    {% endfor %}
+
+</br>
+      </div>
 
 
 
-                    <p>
-                      
-                  <button class="btn btn-primary btn-lg" type="submit" id="file_submit">Submit Changes
-                  </button>
-
-                    </p>
-                  </form>
-
-
-
-                  </div>
-                </div>
-
-              </div>
-
-
-
-          <h2>All Users' Entries</h2>
-
-            <p>
-              <ul>
-              {% for entry, count in entries %}
-              <li>
-                      <b>
-                        Number of Likes: {{count}}
-                      </b>
-
-                      <a href="/entries/view_only/{{ entry.entry_id }}">
-                        
-                        {{entry.title}}
-                      </a>
-                        {{entry.blog[:100]}}
-
-                         {%for p in entry.photos%}
-
-                         <img src="{{p.photo_url}}" width="700" height="500">
-
-                     {% endfor %}
-
-                    </li>
-                    </p>
-
-              {% endfor %}
-            </ul>
+</div>
 
 
               <button id="see-map" value= "{{user.user_id}}" class="btn btn-primary btn-lg">
               See where this user has gone!
               </button>
           </p>
+
         </div>
       </div>
     </div>
@@ -240,17 +177,12 @@
 
   <div id="map"></div>
     <script src="/static/js/maps.js"></script>
-      <script src="/static/js/changeprofile.js"></script>
     <script src="/static/js/other-user-maps.js"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx4bZy24pZfMho7vI4kWPIY7GdCFuU7bs&callback=initMap&libraries=&v=weekly"
       defer
     ></script>
 
-
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
- <script src="/static/js/city_autocompletion.js"></script>
- <script src="/static/js/photoupload.js"></script>
 
 
 

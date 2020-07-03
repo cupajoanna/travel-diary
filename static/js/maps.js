@@ -112,7 +112,7 @@ map.setZoom(3);
 
         var infoWindow = new google.maps.InfoWindow({
         content: `<h4> ${props.content} </h4>` +  
-    `<button id="routeToEntry" onclick="seeEntry(${props.cityId})">see your entry</button>`
+    `<button id="routeToEntry" class="btn btn-primary btn-lg" onclick="seeEntry(${props.cityId})">see your entry</button>`
 
 
       });
