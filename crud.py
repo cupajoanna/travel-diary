@@ -44,9 +44,9 @@ def update_user(user, email, password, username, city):
         update_this.username = username
 
     if city:
-        update_this.city = city.city_id
+        update_this.city = city
 
-        db.session.commit()
+    db.session.commit()
 
     return update_this
 

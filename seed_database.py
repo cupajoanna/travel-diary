@@ -125,11 +125,11 @@ def profile():
 model.connect_to_db(server.app)
 
 city()
-user()
-entry()
-rating()
-photo()
-profile()
+# user()
+# entry()
+# rating()
+# photo()
+# profile()
 
 
 

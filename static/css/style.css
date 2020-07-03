@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+ @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
 
 
@@ -54,6 +54,13 @@ html, body{
   border: 1px solid #8BB174;
 }
 
+.btn-outline-light{
+  background-color: white;
+  border: 1px solid white;
+}
+
+
+
 .btn-primary: hover{
     background-color: #426B69;
     border: 1px solid #426B69;
@@ -72,13 +79,13 @@ a {
 }
 
 .bg-light {
-    background-color: white !important;
+    background-color: #AAEED1 !important;
 }
 
 .h1, h1 {
     font-size: 2.5rem;
-    color:#67A29F;
-/*    text-shadow: 5px 2px 15px */
+    color:#77E4B5;
+/*    text-shadow: 5px 20px 15px */
 }
 
 h3 {

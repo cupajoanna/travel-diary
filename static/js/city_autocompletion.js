@@ -12,5 +12,5 @@ $('#city_search').select2({
 
 
   placeholder: "search for city",
-  width: "400px"
+  width: "200px"
 })

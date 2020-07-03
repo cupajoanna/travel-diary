@@ -48,9 +48,10 @@ def register_user():
     email = request.form.get('email')
     password = request.form.get('password')
     username = request.form.get('username')
-    city_name = request.form.get('city-search')
+    city_id = request.form.get('city_search')
+    city = crud.get_city_by_id(city_id)
 
-    city = crud.get_city_by_name(city_name)
+    print("&"*100)
  
 
     user = crud.get_user_by_email(email)
@@ -290,7 +291,7 @@ def update_details():
     new_password = request.form.get('password')
     new_city = request.form.get('city_search')
 
-    city = crud.get_city_by_name(new_city)
+    city = crud.get_city_by_id(new_city)
 
     image_uploaded = request.files.get('image_upload')
     new_description = request.form.get('description')
@@ -336,6 +337,12 @@ def show_entry(entry_id):
     if session.get('current_user'):
 
         entry = crud.get_entry_by_id(entry_id)
+
+        if entry.user_id != session.get('current_user'):
+
+            return redirect(f'/entries/view_only/{entry_id}')
+
+
         city_id = entry.city_id
 
         city = crud.get_city_by_id(city_id)
