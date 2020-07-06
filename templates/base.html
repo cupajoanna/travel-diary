@@ -18,6 +18,8 @@
 
       <link href="/static/css/style.css" rel="stylesheet">
 
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
 
 
 
@@ -28,7 +30,6 @@
 
 
     {% block head %}{% endblock %}
-
   
   </head>
   <body>
@@ -47,6 +48,9 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarResponsive">
+
+
+ {% if "current_user" in session%}
       
 
     <ul class="navbar-nav ml-auto">
@@ -62,7 +66,6 @@
         <a class="nav-link" href="/entries">All Blog Feed</a>
       </li>
 
-  {% if "current_user" in session%}
 
       <li class="nav-item">
         <a class="nav-link" href="/map">Your Travels</a>
@@ -71,6 +74,37 @@
       <li class="nav-item">
         <a class="nav-link" href="/users/your_entries">Your Profile</a>
       </li>
+
+    <form action="/logout" method="POST">
+      <button class="btn btn-outline-secondary btn-lg" style="color:#426B69"> 
+        LOG OUT 
+       </button>
+            </form>
+
+
+
+
+{%else%}
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/users">All Bonvoyajers</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/entries">All Blog Feed</a>
+      </li>
+
+
+      <button id="myBtn" type="button" class="btn btn-outline-secondary btn-lg" style="color:#426B69"> 
+       LOG IN 
+     </button>
+
+
 
   {%endif%}
 
@@ -96,6 +130,112 @@
     {% block after_body %}{% endblock %}
 
 
+
+<!-- The Modal -->
+<div class="row welcome">
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+
+
+
+      <div class="container-fluid padding">
+        <div class="row welcome text-center">
+
+
+            <div class="col-xs-12 col-sm-6 col-md-4">
+
+              <img src="static/img/palm.png" width="200" height="200">
+              <br></br> 
+              <h3>Journal from everywhere</h3>
+
+              <p>Use Bonvoyaj to take a trip back in time. No time machine needed.</p>
+            </div>
+
+
+
+          <div class="col-xs-12 col-sm-6 col-md-4">
+
+            <h2>Create an Account</h2>
+            <div><form action="/users" method="POST" id="form" class="contact100-form validate-form">
+
+
+             <p>
+              Email   <input type="text" name="email">
+            </p>
+
+
+            <p>
+              Home City  <select name="city_search" id="city_search" class="city_search_bar" multiple="multiple"></select>
+            </p>
+
+
+
+            <p>
+              Username <input type="username" name="username">
+            </p>
+
+
+
+            <p>
+              Password <input type="password" name="password">
+            </p>
+
+            <p>
+
+              <button class="btn btn-primary btn-lg" type="submit">Sign Up
+              </button>
+
+            </p>
+          </form>
+        </div>
+      </div>
+
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+
+
+          <h2>Login</h2>
+          <div><form action="/login" method="POST" id="form" class="contact100-form validate-form">
+
+            <p>
+              Email <input type="text" name="email">
+            </p>
+
+            <p>
+              Password <input type="password" name="password">
+            </p>
+
+            <p>
+
+
+              <button class="btn btn-primary btn-lg"  type="submit">Log In
+              </button>
+
+            </p>
+
+
+          </form>
+        </div>
+
+      </div>
+
+      <hr class="my-4">
+    </div>
+
+
+
+  </div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+
 {# <---- footer -----> #}
 
 <footer>
@@ -114,6 +254,9 @@
     
 
   </body>
+
+<script src="/static/js/city_autocompletion.js"></script>
+<script src="/static/js/changeprofile.js"></script>
 
 
 </html>

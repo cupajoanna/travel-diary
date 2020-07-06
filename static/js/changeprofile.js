@@ -32,3 +32,4 @@ var btn2 = document.getElementById("myBtn2");
 btn2.onclick = function() {
   modal.style.display = "block";
 }
+

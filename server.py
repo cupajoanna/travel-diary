@@ -51,9 +51,6 @@ def register_user():
     city_id = request.form.get('city_search')
     city = crud.get_city_by_id(city_id)
 
-    print("&"*100)
- 
-
     user = crud.get_user_by_email(email)
 
     if user:
@@ -208,8 +205,6 @@ def show_user(user_id):
     entries = crud.get_user_entries_ordered_by_ratings_count(user_id)[::-1]
 
     profile = crud.get_user_profile(user_id)
-    print(profile)
-    print("&"*100)
 
 
     return render_template('user_details.html', user=user, cities=cities, entries=entries, profile=profile)
@@ -256,8 +251,6 @@ def view_only_entry(entry_id):
 
 
         photo = crud.get_photo_by_entry(entry_id)
-        # print("&"*100)
-        # print(entry.title)
 
         created_at_raw = entry.created_at
 
@@ -301,10 +294,6 @@ def update_details():
 
     profile = crud.get_user_profile(user_id)
 
-    print(image_uploaded)
-    print(new_twitter)
-    print("*"*100)
-
     returned_url = None
 
     if image_uploaded:
@@ -312,13 +301,19 @@ def update_details():
         returned_url = response['url']
 
 
+    # if new_username == user.username or new_email == user.email:
+    #     flash('That username or email is taken already, try another one!')
+
+    # else:
+    #     crud.update_user(user, new_email, new_password, new_username, city)
+    
     msg = ""
 
-    crud.update_user(user, new_email, new_password, new_username, city)
 
     if not profile:
         crud.create_profile(user, new_description, new_instagram, new_twitter, new_website, returned_url)
         msg = "user details created"
+
     
     else:
         crud.update_profile(user, returned_url, new_description, new_instagram, new_twitter, new_website)
@@ -327,6 +322,7 @@ def update_details():
     flash(msg)
 
     return redirect('/users/your_entries')
+
 
 
 
@@ -361,9 +357,6 @@ def show_entry(entry_id):
         for rating in ratings: 
             total_ratings += 1
 
-
-        # print("&"*100)
-        # print(entry.title)
 
         return render_template('entry_details.html', entry=entry, city=city, photo = photo, total_ratings = total_ratings, created_at = created_at)
     # return redirect('/')
