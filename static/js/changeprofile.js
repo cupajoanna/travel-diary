@@ -23,3 +23,12 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+// for button2
+
+var btn2 = document.getElementById("myBtn2");
+
+btn2.onclick = function() {
+  modal.style.display = "block";
+}
