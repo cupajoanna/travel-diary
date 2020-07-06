@@ -66,6 +66,21 @@ html, body{
     border: 1px solid #426B69;
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+
+#rcorners3 {
+  border-radius: 55px;
+  background-repeat: repeat;
+  padding: 20px;
+}
+
+
 a {
   color: #2A4849;
   text-decoration: $link-decoration;

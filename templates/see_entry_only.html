@@ -9,65 +9,74 @@ Blog Entry
 {% block body %}
 
 
-<div class="container-fluid padding">
-  <div class="row padding">
-      <div class="col-md-12 col-lg-6">
 
 
-<h1 class="card-title">Entry for city: <a href="/entries/city_specific/{{ city.city_id }}">
+      <h1 class="card-title">Entry for city: <a href="/entries/city_specific/{{ city.city_id }}">
           
           {{ city.city_name }}
-        </a></h1>
+      </a></h1>
 
-<h4>See more articles from this user:  <a href="/users/{{ user.user_id }}">
+      
+      <h5>See more articles from this user:  <a href="/users/{{ user.user_id }}">
           
            {{ user.username }}
-        </a></h4>
+      </a></h5>
 
 
 
-<p>Created at : {{ created_at }}<p>
-
-<p>
-
-  <h2>{{entry.title}}</h2>
+          <p>Created at : {{ created_at }}<p>
 
 
-     <p>
+
+        
+        <h1>{{entry.title}}</h1>
+
+
+         <p>
         Number of likes <span id="likes-counter"> {{total_ratings}} </span>
         likes
-      </p>
+         </p>
 
     <button id="add-to-likes-button" class= "add-to-likes-button" value= "{{entry.entry_id}}" >
     like this entry
     </button>
 
- <p>
-  {{ entry.blog }}
+<div class="container-fluid padding">
+<div class="row welcome text-center">
 
-  </p>
+
+
+<p>
+  {{ entry.blog }}
+</p>
 
 {%if photo%} 
+
+
+
+
   {%for p in photo%}
 
 <div>
 
-       <img src="{{p.photo_url}}" width="700" height="500">
 
-</div>
+       <img src="{{p.photo_url}}" width="700" height="500" class="center" id="rcorners3">
+       <button id="{{p.photo_id}}" class ="photo_delete"> delete </button>  
+
 
   {%endfor%}
+
+</div>
 
 
 {%endif%}
 
 
 </p>
-</p>
-</p>
+
 </div>
 </div>
-</div>
+
 
 <!-- Scripts -->
 

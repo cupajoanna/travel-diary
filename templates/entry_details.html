@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ entry.entry_id }} 
+{% block title %}
+
+{{ entry.city.city_name }} 
 
 Blog Entry 
 
@@ -14,18 +16,71 @@ Blog Entry
  #}
 
 
-<div class="container-contact100">
-    <div class="wrap-contact100">
 
-        <span class="contact100-form-title">
 
-          <h4>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
-                    
-                    {{ city.city_name }}</a></h4>
+  <h1>{{entry.title}}</h1>
+
+  <p>
+
+          <h3>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
+                    {{ city.city_name }}</a></h3>
 
 
           <h5>Created at : {{created_at }}</h5>
-        </span>
+  </p>
+
+<div class="container-fluid padding">
+<div class="row welcome text-center">
+
+
+
+<p>
+  {{ entry.blog }}
+</p>
+
+{%if photo%} 
+
+
+
+
+  {%for p in photo%}
+
+<div>
+
+
+       <img src="{{p.photo_url}}" width="700" height="500" class="center" id="rcorners3">
+       <button id="{{p.photo_id}}" class ="photo_delete"> delete </button>  
+
+
+  {%endfor%}
+
+</div>
+
+
+{%endif%}
+
+
+</p>
+
+</div>
+</div>
+
+
+{#  the form
+ #}
+
+<div class="container-contact100">
+    <div class="wrap-contact100">
+
+{#         <span class="contact100-form-title"> #}
+
+{#           <h3>Entry for: <a href="/entries/city_specific/{{ city.city_id }}">
+                    
+                    {{ city.city_name }}</a></h1>
+
+
+          <h5>Created at : {{created_at }}</h3> #}
+{#         </span> #}
 
 
 
@@ -84,35 +139,10 @@ Blog Entry
 </main>
 </p>
 
-{%if photo%} 
-
-  <h1>{{entry.title}}</h1>
-<p>
-  {{ entry.blog }}
-</p>
 
 
 
-  {%for p in photo%}
 
-<div>
-  <div class="col-lg-6">
-
-       <img src="{{p.photo_url}}" width="700" height="500" class="img-fluid">
-       <button id="{{p.photo_id}}" class ="photo_delete"> delete </button>  
-
-  </div>
-
-  {%endfor%}
-
-</div>
-
-
-{%endif%}
-
-
-</p>
-</br>
 {# </div>
 </div>
 </div> #}
