@@ -123,31 +123,38 @@
           <span class="close">&times;</span>
               <div><form action="/users/your_entries/update" method="POST" enctype=multipart/form-data id="form" class="contact100-form validate-form">
 
+
+
                     <p>
-                      Change Email <input type="text" name="email">
-                            
-                            {%if user.email%}
+                     Change Email  <input name="email_search" id="email_search" class="email_search_bar" multiple="multiple">
+                       
+                    {%if user.email%}
                                {{user.email}}
 
-                            {%endif%}
+                      {%endif%}
 
-                   </p>
+
+                  </p>
+
 
 
                     <p>
-                      Change Username <input type="username" name="username">        
+                     Change Username  <input name="username_search" id="username_search" class="username_search_bar" multiple="multiple">
+                       
                         {%if user.username%}
                            {{user.username}}
 
                       {%endif%}
 
-          
-                    </p>
+
+                  </p>
 
 
 
                     <p>
-                     Change Password <input type="password" name="password">            {%if user.password%}
+                     Change Password <input type="password" name="password">            
+
+                     {%if user.password%}
                            {{user.password}}
 
                       {%endif%}
@@ -224,7 +231,7 @@
 
                   <p>
                     
-                <button class="btn btn-primary btn-lg" type="submit" id="file_submit">Submit Changes
+                <button class="btn btn-primary btn-lg user_details" type="submit" id="file_submit">Submit Changes
                 </button>
 
                   </p>

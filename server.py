@@ -184,6 +184,44 @@ def cities_json():
     return jsonify(res)
 
 
+@app.route("/username-json")
+
+def username_json():
+
+    term = request.args.get('username', '')
+    print(term)
+    print("*"*100)
+    res = { 'results': []}
+
+    usernames = crud.search_username(term)
+
+
+    for name in usernames:
+        res['results'].append({'id': name.user_id, 'text': name.username})
+      
+
+    return jsonify(res)
+
+
+@app.route("/email-json")
+
+def email_json():
+
+    term = request.args.get('email', '')
+    res = { 'results': []}
+
+    emails = crud.search_email(term)
+    print(term)
+
+
+    for email in emails:
+        res['results'].append({'id': name.user_id, 'text': name.email})
+      
+
+    return jsonify(res)
+
+
+
 
 """Users"""
 
@@ -279,8 +317,11 @@ def update_details():
     user_id = session['current_user']
     user = crud.get_user_by_id(user_id)
 
-    new_email = request.form.get('email')
-    new_username = request.form.get('username')
+    new_email = request.form.get('email_search')
+    new_username = request.form.get('username_search')
+    print(new_username)
+    print("*"*100)
+
     new_password = request.form.get('password')
     new_city = request.form.get('city_search')
 
@@ -292,6 +333,7 @@ def update_details():
     new_twitter = request.form.get('twitter')
     new_website = request.form.get('website')
 
+
     profile = crud.get_user_profile(user_id)
 
     returned_url = None
@@ -300,26 +342,32 @@ def update_details():
         response = cloudinary.uploader.upload(image_uploaded)
         returned_url = response['url']
 
+    all_username = crud.search_username(new_username)
 
-    # if new_username == user.username or new_email == user.email:
-    #     flash('That username or email is taken already, try another one!')
+    all_email = crud.search_email(new_email)
 
-    # else:
-    #     crud.update_user(user, new_email, new_password, new_username, city)
+    print(all_username)
+    print(all_email)
+    print("*"*100)
+
+
+
+    if all_username or all_email:
+        flash('That username or email is taken already, try another one!')
+
+    else:
+        crud.update_user(user, new_email, new_password, new_username, city)
     
-    msg = ""
-
 
     if not profile:
         crud.create_profile(user, new_description, new_instagram, new_twitter, new_website, returned_url)
-        msg = "user details created"
+        flash( "user details created")
 
     
     else:
         crud.update_profile(user, returned_url, new_description, new_instagram, new_twitter, new_website)
-        msg = "user details updated"
+        flash("user details updated")
 
-    flash(msg)
 
     return redirect('/users/your_entries')
 
@@ -520,7 +568,7 @@ def like_entry(entry_id):
     #              'city_id': entry.city_id,
     #              'title': entry.title,
     #              'blog': entry.blog})
-
+ 
     # return jsonify(entry_list)
 
 

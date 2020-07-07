@@ -138,6 +138,20 @@ def search_cities(term):
     return City.query.filter(City.city_name.like(f'%{term}%')).all()
 
 
+def search_username(term):
+
+    print(User.query.filter(User.username == term).all())
+    return User.query.filter(User.username == term).all()
+    
+
+
+def search_email(term):
+
+    print(User.query.filter(User.email == term).all())
+    return User.query.filter(User.email == term).all()
+
+
+
 def get_city_by_id(city_id):
     return City.query.get(city_id)
 
