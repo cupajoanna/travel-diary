@@ -4,13 +4,15 @@
 {% block body %}
 
 
+<br></br>
+<br></br>
 
 <div class="container-fluid padding">
 
 <div class="row test-center padding">
 
  
-<br>
+
     {# <ul> #}
         {% for user in users %}
 
@@ -24,14 +26,6 @@
 
             {%for p in user.profiles%}
 
-            {%if p.description%} 
-
-             {{p.description}}
-{#                 <br> Instagram Handle: {{user.profiles.instagram}}</br>
-                <br> Twitter Handle: {{user.profiles.twitter}}</br>
-                <br> Personal Portfolio: {{user.profiles.website}}</br> #}
-            {%endif%}
-
 
             <br>
 
@@ -40,6 +34,14 @@
                 <br></br>
 
              {%endif%}
+
+              {%if p.description%} 
+
+              {{p.description}} 
+{#                 <br> Instagram Handle: {{user.profiles.instagram}}</br>
+                <br> Twitter Handle: {{user.profiles.twitter}}</br>
+                <br> Personal Portfolio: {{user.profiles.website}}</br> #}
+            {%endif%}
 
             </br>
             {% endfor %}
@@ -52,11 +54,15 @@
         {% endfor %}
 {#   </ul> #}
 
-</br>
 </div>
 
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+<script src="/static/js/city_autocompletion.js"></script>
 
 
 {% endblock body %}

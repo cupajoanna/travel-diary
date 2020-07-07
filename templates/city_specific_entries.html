@@ -3,45 +3,72 @@
 
 {% block body %}
 
+<div class="container-fluid padding">
+  <div class="row welcome text-center">
+      <div class="col-md-12">
+
+
+</div>
+</div>
+</div>
+
+{# <---- cards ---> #}
 
 <div class="container-fluid padding">
-  <div class="row padding">
-      <div class="col-md-12 col-lg-6">
+<div class="row padding">
+
+<br>
+
+
   
+    {% for entry, count in entries %}
 
-  <h5>{{city.city_name}} Entries</h5>
 
-  <p>
-    <ul>
-    {% for entry, count in entries_with_ratings %}
+          {%for p in entry.photos%}
+          <div class="col-xs-12 col-sm-6 col-md-4">
 
-           <li>
-            <b>
-              Number of Likes: {{count}}
-            </b>
+              <img src="{{p.photo_url}}" width="500" height="350" id="rcorners3">
+                {% endfor %}
+                
+{#               <div class="card-body"> #}
 
-            <a href="/entries/view_only/{{ entry.entry_id }}">
+
+                <h4 class="card-title">    <a href="/entries/view_only/{{ entry.entry_id }}">{{entry.title}}    </a></h4>
+
+
+                    <b>
+                      Number of Likes: {{count}}
+                    </b>
+
+                    
+                    {{entry.blog[:100]}}
+          {#               {{entry.created_at}} #}
+                
               
-              {{entry.title}}
-            </a>
-              {{entry.blog[:100]}}
-              {{entry.created_at}}
+               <a href='#' class="btn btn-outline secondary"> See Profile </a>
 
-               {%for p in entry.photos%}
+          </div>
 
-               <img src="{{p.photo_url}}" width="700" height="500">
-
-           {% endfor %}
-
-          </li>
-          </p>
 
     {% endfor %}
-  </ul>
 
-</p>
+</br>
+      </div>
+
+
+
+ 
+<hr class="my-4">
+
+
 </div>
-</div>
-</div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+<script src="/static/js/city_autocompletion.js"></script>
+
 
 {% endblock body %}
+
+

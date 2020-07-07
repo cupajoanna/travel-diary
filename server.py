@@ -229,7 +229,7 @@ def email_json():
 @app.route('/users')
 def all_users():
 
-    users = crud.get_users()[::-1]
+    users = crud.get_users()
 
     return render_template('all_users.html', users=users)
     
@@ -262,10 +262,10 @@ def all_entries():
 @app.route('/entries/city_specific/<city_id>')
 def city_specific_entries(city_id):
 
-    entries_with_ratings = crud.get_city_entries_ordered_by_ratings_count(city_id)[::-1]
+    entries = crud.get_city_entries_ordered_by_ratings_count(city_id)[::-1]
     city = crud.get_city_by_id(city_id)
 
-    return render_template('city_specific_entries.html', entries_with_ratings=entries_with_ratings, city=city)
+    return render_template('city_specific_entries.html', entries=entries, city=city)
 
 
 

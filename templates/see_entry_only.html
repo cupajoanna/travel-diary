@@ -33,12 +33,12 @@ Blog Entry
 
 
          <p>
-        Number of likes <span id="likes-counter"> {{total_ratings}} </span>
-        likes
+        Number of likes: <span id="likes-counter"> {{total_ratings}} </span>
+        ♡
          </p>
 
-    <button id="add-to-likes-button" class= "add-to-likes-button" value= "{{entry.entry_id}}" >
-    like this entry
+    <button id="add-to-likes-button" class= "btn btn-outline-secondary btn-lg add-to-likes-button" value= "{{entry.entry_id}}" >
+    ♡ this entry
     </button>
 
 <div class="container-fluid padding">
@@ -61,7 +61,6 @@ Blog Entry
 
 
        <img src="{{p.photo_url}}" width="700" height="500" class="center" id="rcorners3">
-       <button id="{{p.photo_id}}" class ="photo_delete"> delete </button>  
 
 
   {%endfor%}
@@ -78,8 +77,15 @@ Blog Entry
 </div>
 
 
+
+
 <!-- Scripts -->
 
 <script src="/static/js/torate.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+<script src="/static/js/city_autocompletion.js"></script>
 
 {% endblock %}

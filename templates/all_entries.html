@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+
+
 {% block title %}All Entries{% endblock %}
 
 {% block body %}
@@ -39,7 +41,7 @@
           {%for p in entry.photos%}
           <div class="col-xs-12 col-sm-6 col-md-4">
 
-              <img src="{{p.photo_url}}" width="500" height="350">
+              <img src="{{p.photo_url}}" width="500" height="350" id="rcorners3">
                 {% endfor %}
                 
 {#               <div class="card-body"> #}
@@ -49,15 +51,18 @@
 
 
                     <b>
-                      Number of Likes: {{count}}
+                      Number of ♡: {{count}}
                     </b>
 
+                    <br></br>
+
                     
-                    {{entry.blog[:100]}}
+                    {{entry.blog[:250]}}
           {#               {{entry.created_at}} #}
+                  <br></br>
                 
               
-               <a href='#' class="btn btn-outline secondary"> See Profile </a>
+               <a href="/users/{{ entry.user_id }}" class="btn btn-outline-secondary"> See Profile </a>
 
           </div>
 
@@ -76,6 +81,12 @@
 </div>
 
 
-{% endblock body %}
 
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+<script src="/static/js/city_autocompletion.js"></script>
+
+{% endblock body %}
 
